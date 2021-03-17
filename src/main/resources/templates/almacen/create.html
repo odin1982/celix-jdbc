@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+<meta charset="UTF-8">
+<title th:text="${@environment.getProperty('celix.title.form.almacen')}"></title>
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<header th:insert="fragments/menu :: menu-principal"></header>
+	<br>
+	<div class="container">
+		<div class="card">
+			<div class="card-header"
+				th:text="${@environment.getProperty('celix.title.form.almacen')}"></div>
+			<div class="card-body">
+				<form th:action="@{/almacen/save}" method="post"
+					th:object="${almacen}">
+					<input type="hidden" class="form-control" id="id" name="id"
+						th:field="*{id}">
+					<div class="form-group row">
+						<label for="descripcion" class="col-sm-2 col-form-label"
+							th:text="${@environment.getProperty('celix.title.descripcion')}"></label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="descripcion"
+								name="descripcion" th:field="*{descripcion}"
+								placeholder="Ingresa el nombre del almacén">
+						</div>
+					</div>
+					<div class="row text-right">
+						<div class="col-sm-12 pull-right">
+							<button type="submit" class="btn btn-light">
+								<i class="fas fa-save"></i> Guardar
+							</button>
+							<a th:href="@{/almacen/index}" class="btn btn-light">Regresar</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script src="https://kit.fontawesome.com/33cdef5f0d.js"
+		crossorigin="anonymous"></script>
+	<script th:src="@{/js/almacen/almacen.js}"></script>
+</body>
+</html>

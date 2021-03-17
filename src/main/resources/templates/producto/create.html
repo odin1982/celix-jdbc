@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="es">
+<head>
+<meta charset="UTF-8">
+<title th:text="#{celix.title.form.producto}"></title>
+ <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<header th:insert="fragments/menu :: menu-principal"></header>
+	<br>
+	<div class="container">
+		<div class="card">
+			<div class="card-header" th:text="#{celix.title.form.producto}"></div>
+			<div class="card-body">
+				<form th:action="@{/producto/save}" method="post" th:object="${producto}">
+					<input type="hidden" class="form-control" id="idProducto" name="idProducto" th:field="*{idProducto}">
+					<div class="form-group row">
+    					<label for="nombre" class="col-sm-3 col-form-label" th:text="#{celix.title.nombre}"></label>
+    					<div class="col-sm-9">
+      						<input type="text" class="form-control" id="nombre" name="nombre" th:field="*{nombre}" placeholder="Ingresa el nombre del producto">
+    					</div>
+  					</div>
+  					<div class="form-group row">
+    					<label for="descripcion" class="col-sm-3 col-form-label" th:text="#{celix.title.descripcion}"></label>
+    					<div class="col-sm-9">
+      						<input type="text" class="form-control" id="descripcion" name="descripcion" th:field="*{descripcion}" placeholder="Ingresa la descripción del producto">
+    					</div>
+  					</div>
+  					<div class="form-group row">
+  						<label for="selectTipoProducto" class="col-sm-3 col-form-label" th:text="#{celix.title.tipo.producto}"></label>
+	  					<div class="col-sm-9">
+		  					<select id="selectTipoProducto" name="selectTipoProducto" th:field="*{idTipoProducto}" class="form-control">
+		        				<option th:value="0" selected th:text="#{celix.title.escoge.opcion}"></option>
+		        				<option th:each="tipoProducto :${ listTipoProductos }" th:value="${tipoProducto.idTipoProducto}" th:text="${tipoProducto.descripcion}"></option>
+		      				</select>
+	      				</div>
+  					</div>
+  					<div class="form-group row">
+  						<label for="selectMarca" class="col-sm-3 col-form-label" th:text="#{celix.title.marca}"></label>
+	  					<div class="col-sm-9">
+		  					<select id="selectMarca" name="selectMarca" th:field="*{idMarca}" class="form-control">
+		        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
+		        				<option th:each="marca :${ marcas }" th:value="${marca.idMarca}" th:text="${marca.descripcion}"></option>
+		      				</select>
+	      				</div>
+  					</div>
+  					<div class="form-group row">
+  						<label for="selectProveedor" class="col-sm-3 col-form-label" th:text="#{celix.title.proveedor}"></label>
+	  					<div class="col-sm-9">
+		  					<select id="selectProveedor" name="selectProveedor" th:field="*{idProveedor}" class="form-control">
+		        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
+		        				<option th:each="proveedor :${ proveedores }" th:value="${proveedor.idProveedor}" th:text="${proveedor.nombre}"></option>
+		      				</select>
+	      				</div>
+  					</div>
+  					<div class="form-group row">
+    					<label for="codigoDeBarrasTienda" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.barras.tienda}"></label>
+    					<div class="col-sm-9">
+      						<input type="text" class="form-control" id="codigoDeBarrasTienda" name="codigoDeBarrasTienda" th:field="*{codigoDeBarrasTienda}" placeholder="Ingresa el código de barras que ha agregado la tienda al producto">
+    					</div>
+  					</div>
+  					<div class="form-group row">
+    					<label for="codigoDeBarrasMarca" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.barras.marca}"></label>
+    					<div class="col-sm-9">
+      						<input type="text" class="form-control" id="codigoDeBarrasMarca" name="codigoDeBarrasMarca" th:field="*{codigoDeBarrasMarca}" placeholder="Ingresa el código de barras del producto">
+    					</div>
+  					</div>
+  					<div class="form-group row">
+    					<label for="precioCompra" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra}"></label>
+    					<div class="col-sm-9">
+      						<input type="text" class="form-control" id="precioCompra" name="precioCompra" th:field="*{precioCompra}" placeholder="Ingresa el precio de compra">
+    					</div>
+  					</div>
+  					<div class="form-group row">
+    					<label for="precioVenta" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.venta}"></label>
+    					<div class="col-sm-9">
+      						<input type="text" class="form-control" id="precioVenta" name="precioVenta" th:field="*{precioVenta}" placeholder="Ingresa el precio de venta">
+    					</div>
+  					</div>
+  					<div class="form-group row">
+    					<div class="col-sm-12">
+      						<button type="submit" class="btn btn-light float-right"><i class="fas fa-save"></i> Guardar</button>
+    					</div>
+  					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
+</body>
+</html>

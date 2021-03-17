@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${@environment.getProperty('celix.title.form.proveedor')}"></title>
+ <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<header th:insert="fragments/menu :: menu-principal"></header>
+	<br>
+		<div class="container">
+			<div class="card">
+				<div class="card-header" th:text="${@environment.getProperty('celix.title.form.proveedor')}"></div>
+				<div class="card-body">
+					<form th:action="@{/proveedor/save}" method="post" th:object="${proveedor}">
+						<input type="hidden" class="form-control" id="idProveedor" name="idProveedor" th:field="*{idProveedor}">
+	  					<div class="form-group row">
+	    					<label for="nombre" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.nombre')}"></label>
+	    					<div class="col-sm-10">
+	      						<input type="text" class="form-control" id="nombre" name="nombre" th:field="*{nombre}" placeholder="Ingresa el nombre de proveedor">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<label for="direccion" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.direccion')}"></label>
+	    					<div class="col-sm-10">
+	      						<input type="text" class="form-control" id="direccion" name="direccion" th:field="*{direccion}" placeholder="Ingresa la dirección del proveedor">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<label for="telefono" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.telefono.fijo')}"></label>
+	    					<div class="col-sm-10">
+	      						<input type="text" class="form-control" id="telefono" name="telefono" th:field="*{telefono}" placeholder="Ingresa el télefono fijo del proveedor">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<label for="correoElectronico" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.correo.electronico')}"></label>
+	    					<div class="col-sm-10">
+	      						<input type="text" class="form-control" id="correoElectronico" name="correoElectronico" th:field="*{correoElectronico}" placeholder="Ingresa el correo electronico del proveedor">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<label for="sitioWeb" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.sitio.web')}"></label>
+	    					<div class="col-sm-10">
+	      						<input type="text" class="form-control" id="sitioWeb" name="sitioWeb" th:field="*{sitioWeb}" placeholder="Ingresa la pagina web del proveedor">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<label for="rfc" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.rfc')}"></label>
+	    					<div class="col-sm-10">
+	      						<input type="text" class="form-control" id="rfc" name="rfc" th:field="*{rfc}" placeholder="Ingresa el RFC del proveedor">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<label for="razonSocial" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.razon.social')}"></label>
+	    					<div class="col-sm-10">
+	      						<input type="text" class="form-control" id="razonSocial" name="razonSocial" th:field="*{razonSocial}" placeholder="Ingresa la razon social del proveedor">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<div class="col-sm-12">
+	      						<button type="submit" class="btn btn-light float-right"><i class="fas fa-save"></i> Guardar</button>
+	    					</div>
+	  					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${@environment.getProperty('celix.title.form.estatus.producto')}"></title>
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<header th:insert="fragments/menu :: menu-principal"></header>
+	<br>
+	<div class="container">
+		<div class="card">
+			<div class="card-header" th:text="${@environment.getProperty('celix.title.form.estatus.producto')}"></div>
+			<div class="card-body">
+				<a class="btn btn-light" th:href="@{/estatusproducto/create}" role="button"><i class="fas fa-plus-square"></i> Nuevo</a>
+                <hr>
+                <div th:if="${message != null}" class='alert alert-success'role='alert' th:text="${message}"></div>
+				<table class="table">
+  					<thead class="thead-dark">
+					    <tr>
+					      <th scope="col"  th:text="#{'celix.title.id'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.descripcion'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.table.editar'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.table.eliminar'}"></th>
+					    </tr>
+  					</thead>
+  					<tbody>
+					    <tr th:each="estatusProducto : ${estatusProductos}">
+					      <th scope="row" th:text="${estatusProducto.id}"></th>
+					      <td th:text="${estatusProducto.descripcion}"></td>
+					      <td>
+					      	<a th:href="@{/estatusproducto/edit/{id}(id=${estatusProducto.id})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
+					      </td>
+					       <td>
+					      	<a th:href="@{/estatusproducto/delete/{id}(id=${estatusProducto.id})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a> 
+					       </td>
+					    </tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
+</body>
+</html>
