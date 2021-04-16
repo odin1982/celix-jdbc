@@ -7,7 +7,7 @@ import org.celix.model.TiendaModel;
 public interface TiendaRepository {
 	public List<TiendaModel> findAll();
 	public TiendaModel findById(Long id);
-	public List<TiendaModel> findByDescription(String description);
+	public List<TiendaModel> findByNombre(String nombre);
 	public void save(TiendaModel almacen);
 	public void update(TiendaModel almacen);
 	public void deleteById(Long id);

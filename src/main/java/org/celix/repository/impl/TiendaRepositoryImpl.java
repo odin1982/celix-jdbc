@@ -2,7 +2,6 @@ package org.celix.repository.impl;
 
 import java.util.List;
 
-import org.celix.model.AlmacenModel;
 import org.celix.model.TiendaModel;
 import org.celix.repository.TiendaRepository;
 import org.celix.util.ConsultasPropertiesConfig;
@@ -33,10 +32,10 @@ public class TiendaRepositoryImpl implements TiendaRepository{
 	}
 
 	@Override
-	public List<TiendaModel> findByDescription(String description) {
+	public List<TiendaModel> findByNombre(String nombre) {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-		namedParameters.addValue( "descripcion",description);
-		return namedJdbcTemplate.query(consultas.getProperty("tienda.find.by.description"),namedParameters,new BeanPropertyRowMapper<>(TiendaModel.class));
+		namedParameters.addValue( "nombre",nombre);
+		return namedJdbcTemplate.query(consultas.getProperty("tienda.find.by.nombre"),namedParameters,new BeanPropertyRowMapper<>(TiendaModel.class));
 
 	}
 
@@ -52,15 +51,21 @@ public class TiendaRepositoryImpl implements TiendaRepository{
 	}
 
 	@Override
-	public void update(TiendaModel almacen) {
-		// TODO Auto-generated method stub
-		
+	public void update(TiendaModel tienda) {
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue( "nombre",tienda.getNombre());
+		namedParameters.addValue( "direccion",tienda.getDireccion()); 
+		namedParameters.addValue( "telefono_fijo",tienda.getTelefonoFijo()); 
+		namedParameters.addValue( "telefono_celular",tienda.getTelefonoCelular()); 
+		namedParameters.addValue( "correo_electronico",tienda.getCorreoElectronico());
+		namedJdbcTemplate.update(consultas.getProperty("tienda.update"), namedParameters);
 	}
 
 	@Override
 	public void deleteById(Long id) {
-		// TODO Auto-generated method stub
-		
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue( "id",id );
+		namedJdbcTemplate.update(consultas.getProperty("tienda.delete"), namedParameters);
 	}
 
 }
