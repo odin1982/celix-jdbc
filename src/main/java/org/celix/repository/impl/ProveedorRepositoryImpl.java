@@ -1,6 +1,7 @@
 package org.celix.repository.impl;
 
 import java.util.List;
+
 import org.celix.model.ProveedorModel;
 import org.celix.repository.ProveedorRepository;
 import org.celix.util.ConsultasPropertiesConfig;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProveedorRepositoryImpl implements ProveedorRepository{
 
 	@Autowired
@@ -19,7 +22,7 @@ public class ProveedorRepositoryImpl implements ProveedorRepository{
 
 	@Override
 	public List<ProveedorModel> findAll() {
-		return namedJdbcTemplate.query( consultas.getProperty("proveedor.findAll"), new BeanPropertyRowMapper<>(ProveedorModel.class) );
+		return namedJdbcTemplate.query(consultas.getProperty("proveedor.find.all"), new BeanPropertyRowMapper<>(ProveedorModel.class));
 	}
 
 	@Override

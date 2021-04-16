@@ -41,7 +41,7 @@ public class AlmacenRepositoryImpl implements AlmacenRepository{
 	public List<AlmacenModel> findByDescription(String description) {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 		namedParameters.addValue( "descripcion",description);
-		return namedJdbcTemplate.query(consultas.getProperty("almacen.findByDescription"),namedParameters,new BeanPropertyRowMapper<>(AlmacenModel.class));
+		return namedJdbcTemplate.query(consultas.getProperty("almacen.find.by.description"),namedParameters,new BeanPropertyRowMapper<>(AlmacenModel.class));
 	}
 
 	@Override

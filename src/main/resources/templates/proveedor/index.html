@@ -26,13 +26,13 @@
 					      <th scope="col"  th:text="${@environment.getProperty('celix.title.sitio.web')}"></th>
 					      <th scope="col"  th:text="${@environment.getProperty('celix.title.rfc')}"></th>
 					      <th scope="col"  th:text="${@environment.getProperty('celix.title.razon.social')}"></th>
-					      <th scope="col"  th:text="${@environment.getProperty('celix.title.table.editar')}"></th>
-					      <th scope="col"  th:text="${@environment.getProperty('celix.title.table.eliminar')}"></th>
+					      <th scope="col"  th:text="${@environment.getProperty('celix.title.editar')}"></th>
+					      <th scope="col"  th:text="${@environment.getProperty('celix.title.eliminar')}"></th>
 					    </tr>
   					</thead>
   					<tbody>
 					    <tr th:each="proveedor : ${proveedores}">
-					      <th scope="row" th:text="${proveedor.idProveedor}"></th>
+					      <th scope="row" th:text="${proveedor.id}"></th>
 					      <td th:text="${proveedor.nombre}"></td>
 					      <td th:text="${proveedor.direccion}"></td>
 					      <td th:text="${proveedor.telefono}"></td>
@@ -41,10 +41,10 @@
 					      <td th:text="${proveedor.rfc}"></td>
 					      <td th:text="${proveedor.razonSocial}"></td>
 					      <td>
-					      	<a th:href="@{/proveedor/edit/{id}(id=${proveedor.idProveedor})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
+					      	<a th:href="@{/proveedor/edit/{id}(id=${proveedor.id})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
 					      </td>
 					      <td>
-					      	<a th:href="@{/proveedor/delete/{id}(id=${proveedor.idProveedor})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a> 
+					      	<a th:href="@{/proveedor/delete/{id}(id=${proveedor.id})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a> 
 					      </td>
 					    </tr>
 					</tbody>

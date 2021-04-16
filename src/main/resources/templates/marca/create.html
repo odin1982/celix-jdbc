@@ -13,22 +13,16 @@
 			<div class="card-header" th:text="#{'celix.title.form.marca'}"></div>
 			<div class="card-body">
 				<form th:action="@{/marca/save}" method="post" th:object="${marca}">
-					<input type="hidden" class="form-control" id="id" name="id"
-						th:field="*{id}">
+					<input type="hidden" class="form-control" id="id" name="id" th:field="*{id}">
 					<div class="form-group row">
-						<label for="descripcion" class="col-sm-2 col-form-label"
-							th:text="#{'celix.title.descripcion'}"></label>
+						<label for="descripcion" class="col-sm-2 col-form-label" th:text="#{'celix.title.descripcion'}"></label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="descripcion"
-								name="descripcion" th:field="*{descripcion}"
-								placeholder="Ingresa el nombre de la marca">
+							<input type="text" class="form-control" id="descripcion" name="descripcion" th:field="*{descripcion}" placeholder="Ingresa el nombre de la marca">
 						</div>
 					</div>
 					<div class="row text-right">
 						<div class="col-sm-12 pull-right">
-							<button type="submit" class="btn btn-light">
-								<i class="fas fa-save"></i> Guardar
-							</button>
+							<button type="submit" class="btn btn-light"><i class="fas fa-save"></i> Guardar</button>
 							<a th:href="@{/marca/index}" class="btn btn-light">Regresar</a>
 						</div>
 					</div>

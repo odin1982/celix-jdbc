@@ -26,7 +26,7 @@ public class MarcaController {
 	@GetMapping("/index")
 	public String index(Model model) {
 		List<MarcaModel> marcas = marcaService.findAll();
-		System.out.println("marcas ----> " + marcas);
+		logger.info("Marcas ----> \n{}",marcas);
 		model.addAttribute("marcas", marcas);
 		return "marca/index";
 	}

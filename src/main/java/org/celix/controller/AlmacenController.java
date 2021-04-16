@@ -26,16 +26,18 @@ public class AlmacenController {
 	public String index(Model model) {
 		List<AlmacenModel> almacenes = almacenService.findAll();
 		model.addAttribute("almacenes", almacenes);
-		logger.info("almacenes ----> {}",almacenes);
+		logger.info("Almacenes encontrados ----> {}",almacenes);
 		return "almacen/index";
 	}
 	
 	@PostMapping("/save")
 	public String save(AlmacenModel almacen,RedirectAttributes redirect) {
 		if(almacen.getId() == null) {
+			logger.info("Guardando almacen ----> {}",almacen);
 			almacenService.save(almacen);
 			redirect.addFlashAttribute("message", "Se ha registrado correctamente el almacén.");
 		}else {
+			logger.info("Editando almacen ----> {}",almacen);
 			almacenService.update(almacen);
 			redirect.addFlashAttribute("message", "Se ha actualizado correctamente el almacén.");
 		}
@@ -52,6 +54,7 @@ public class AlmacenController {
 
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable("id") Long id,RedirectAttributes redirect) {
+		logger.info("Borrando almacen id ----> {}",id);
 		almacenService.deleteById(id);
 		redirect.addFlashAttribute("message", "Se ha eliminado correctamente el almacén.");
 		return "redirect:/almacen/index";
@@ -60,6 +63,7 @@ public class AlmacenController {
 	
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") Long id,Model model) {
+		logger.info("Editar almacen con id ----> {}",id);
 		AlmacenModel almacen = almacenService.findById(id);
 		model.addAttribute("almacen", almacen);
 		return "almacen/create";
