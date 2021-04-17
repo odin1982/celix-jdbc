@@ -13,7 +13,7 @@
 				<div class="card-header" th:text="${@environment.getProperty('celix.title.form.tienda')}"></div>
 				<div class="card-body">
 					<form th:action="@{/tienda/save}" method="post" th:object="${tienda}">
-						<input type="hidden" class="form-control" id="idTienda" name="idTienda" th:field="*{idTienda}">
+						<input type="hidden" class="form-control" id="id" name="id" th:field="*{id}">
 	  					<div class="form-group row">
 	    					<label for="nombre" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.nombre')}"></label>
 	    					<div class="col-sm-10">
@@ -41,7 +41,7 @@
 	  					<div class="form-group row">
 	    					<label for="correoElectronico" class="col-sm-2 col-form-label" th:text="${@environment.getProperty('celix.title.correo.electronico')}"></label>
 	    					<div class="col-sm-10">
-	      						<input type="text" class="form-control" id="correoElectronico" name="correoElectronico" th:field="*{correoElectronico}" placeholder="Ingresa el correo electronico de la tienda">
+	      						<input type="text" class="form-control" id="correoElectronico" name="correoElectronico" th:field="*{correoElectronico}" placeholder="Ingresa el correo electrónico de la tienda">
 	    					</div>
 	  					</div>
 	  					<div class="form-group row">

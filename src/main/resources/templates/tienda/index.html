@@ -30,17 +30,17 @@
   					</thead>
   					<tbody>
 					    <tr th:each="tienda : ${tiendas}">
-					      <th scope="row" th:text="${tienda.idTienda}"></th>
+					      <th scope="row" th:text="${tienda.id}"></th>
 					      <td th:text="${tienda.nombre}"></td>
 					      <td th:text="${tienda.direccion}"></td>
 					      <td th:text="${tienda.telefonoFijo}"></td>
 					      <td th:text="${tienda.telefonoCelular}"></td>
 					      <td th:text="${tienda.correoElectronico}"></td>
 					      <td>
-					      	<a th:href="@{/tienda/edit/{id}(id=${tienda.idTienda})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
+					      	<a th:href="@{/tienda/edit/{id}(id=${tienda.id})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
 					      </td>
 					      <td>
-					      	<a th:href="@{/tienda/delete/{id}(id=${tienda.idTienda})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a> 
+					      	<a th:href="@{/tienda/delete/{id}(id=${tienda.id})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a> 
 					      </td>
 					    </tr>
 					</tbody>

@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class TiendaRepositoryImpl implements TiendaRepository{
 	
 	@Autowired
@@ -42,22 +44,24 @@ public class TiendaRepositoryImpl implements TiendaRepository{
 	@Override
 	public void save(TiendaModel tienda) {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue( "id",tienda.getId());
 		namedParameters.addValue( "nombre",tienda.getNombre());
 		namedParameters.addValue( "direccion",tienda.getDireccion()); 
-		namedParameters.addValue( "telefono_fijo",tienda.getTelefonoFijo()); 
-		namedParameters.addValue( "telefono_celular",tienda.getTelefonoCelular()); 
-		namedParameters.addValue( "correo_electronico",tienda.getCorreoElectronico());
+		namedParameters.addValue( "telefonoFijo",tienda.getTelefonoFijo()); 
+		namedParameters.addValue( "telefonoCelular",tienda.getTelefonoCelular()); 
+		namedParameters.addValue( "correoElectronico",tienda.getCorreoElectronico());
 		namedJdbcTemplate.update(consultas.getProperty("tienda.insert"), namedParameters);
 	}
 
 	@Override
 	public void update(TiendaModel tienda) {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue( "id",tienda.getId());
 		namedParameters.addValue( "nombre",tienda.getNombre());
 		namedParameters.addValue( "direccion",tienda.getDireccion()); 
-		namedParameters.addValue( "telefono_fijo",tienda.getTelefonoFijo()); 
-		namedParameters.addValue( "telefono_celular",tienda.getTelefonoCelular()); 
-		namedParameters.addValue( "correo_electronico",tienda.getCorreoElectronico());
+		namedParameters.addValue( "telefonoFijo",tienda.getTelefonoFijo()); 
+		namedParameters.addValue( "telefonoCelular",tienda.getTelefonoCelular()); 
+		namedParameters.addValue( "correoElectronico",tienda.getCorreoElectronico());
 		namedJdbcTemplate.update(consultas.getProperty("tienda.update"), namedParameters);
 	}
 
