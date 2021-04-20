@@ -13,7 +13,7 @@
 		<div class="card">
 			<div class="card-header" th:text="${@environment.getProperty('celix.title.form.tipo.usuario')}"></div>
 			<div class="card-body">
-				<a class="btn btn-light" th:href="@{/tipousuario/create}" role="button"><i class="fas fa-plus-square"></i> Nuevo</a>
+				<a class="btn btn-light" th:href="@{/tipo-usuario/create}" role="button"><i class="fas fa-plus-square"></i> Nuevo</a>
                 <hr>
                 <div th:if="${message != null}" class='alert alert-success'role='alert'   th:text="${message}"></div>
 				<table class="table">
@@ -26,14 +26,14 @@
 					    </tr>
   					</thead>
   					<tbody>
-					    <tr th:each="tipoUsuario : ${listTipoUsuario}">
-					      <th scope="row" th:text="${tipoUsuario.idTipoUsuario}"></th>
+					    <tr th:each="tipoUsuario : ${tiposUsuario}">
+					      <th scope="row" th:text="${tipoUsuario.id}"></th>
 					      <td th:text="${tipoUsuario.descripcion}"></td>
 					      <td>
-					      	<a th:href="@{/tipousuario/edit/{id}(id=${tipoUsuario.idTipoUsuario})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
+					      	<a th:href="@{/tipo-usuario/edit/{id}(id=${tipoUsuario.id})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
 					      </td>
 					      <td>
-					      	<a th:href="@{/tipousuario/delete/{id}(id=${tipoUsuario.idTipoUsuario})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a> 
+					      	<a th:href="@{/tipo-usuario/delete/{id}(id=${tipoUsuario.id})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a> 
 					      </td>
 					    </tr>
 					</tbody>
