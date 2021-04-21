@@ -13,7 +13,7 @@
 			<div class="card-header" th:text="#{celix.title.form.producto}"></div>
 			<div class="card-body">
 				<form th:action="@{/producto/save}" method="post" th:object="${producto}">
-					<input type="hidden" class="form-control" id="idProducto" name="idProducto" th:field="*{idProducto}">
+					<input type="hidden" class="form-control" id="id" name="id" th:field="*{id}">
 					<div class="form-group row">
     					<label for="nombre" class="col-sm-3 col-form-label" th:text="#{celix.title.nombre}"></label>
     					<div class="col-sm-9">
@@ -31,7 +31,7 @@
 	  					<div class="col-sm-9">
 		  					<select id="selectTipoProducto" name="selectTipoProducto" th:field="*{idTipoProducto}" class="form-control">
 		        				<option th:value="0" selected th:text="#{celix.title.escoge.opcion}"></option>
-		        				<option th:each="tipoProducto :${ listTipoProductos }" th:value="${tipoProducto.idTipoProducto}" th:text="${tipoProducto.descripcion}"></option>
+		        				<option th:each="tipoProducto :${ tiposProducto }" th:value="${tipoProducto.id}" th:text="${tipoProducto.descripcion}" th:selected="${idTipoProducto}"></option>
 		      				</select>
 	      				</div>
   					</div>
@@ -40,7 +40,7 @@
 	  					<div class="col-sm-9">
 		  					<select id="selectMarca" name="selectMarca" th:field="*{idMarca}" class="form-control">
 		        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
-		        				<option th:each="marca :${ marcas }" th:value="${marca.idMarca}" th:text="${marca.descripcion}"></option>
+		        				<option th:each="marca :${ marcas }" th:value="${marca.id}" th:text="${marca.descripcion}"></option>
 		      				</select>
 	      				</div>
   					</div>
@@ -49,20 +49,20 @@
 	  					<div class="col-sm-9">
 		  					<select id="selectProveedor" name="selectProveedor" th:field="*{idProveedor}" class="form-control">
 		        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
-		        				<option th:each="proveedor :${ proveedores }" th:value="${proveedor.idProveedor}" th:text="${proveedor.nombre}"></option>
+		        				<option th:each="proveedor :${ proveedores }" th:value="${proveedor.id}" th:text="${proveedor.nombre}"></option>
 		      				</select>
 	      				</div>
   					</div>
   					<div class="form-group row">
     					<label for="codigoDeBarrasTienda" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.barras.tienda}"></label>
     					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="codigoDeBarrasTienda" name="codigoDeBarrasTienda" th:field="*{codigoDeBarrasTienda}" placeholder="Ingresa el código de barras que ha agregado la tienda al producto">
+      						<input type="text" class="form-control" id="codigoBarrasTienda" name="codigoBarrasTienda" th:field="*{codigoBarrasTienda}" placeholder="Ingresa el código de barras que ha agregado la tienda al producto">
     					</div>
   					</div>
   					<div class="form-group row">
     					<label for="codigoDeBarrasMarca" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.barras.marca}"></label>
     					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="codigoDeBarrasMarca" name="codigoDeBarrasMarca" th:field="*{codigoDeBarrasMarca}" placeholder="Ingresa el código de barras del producto">
+      						<input type="text" class="form-control" id="codigoBarrasMarca" name="codigoBarrasMarca" th:field="*{codigoBarrasMarca}" placeholder="Ingresa el código de barras del producto">
     					</div>
   					</div>
   					<div class="form-group row">

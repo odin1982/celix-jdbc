@@ -1,5 +1,6 @@
 package org.celix.repository.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.celix.model.ProductoModel;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProductoRepositoryImpl implements ProductoRepository {
 
 	@Autowired
@@ -20,7 +23,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
 
 	@Override
 	public List<ProductoModel> findAll() {
-		return namedJdbcTemplate.query(consultas.getProperty("producto.findAll"),
+		return namedJdbcTemplate.query(consultas.getProperty("producto.find.all"),
 				new BeanPropertyRowMapper<>(ProductoModel.class));
 	}
 
@@ -78,30 +81,33 @@ public class ProductoRepositoryImpl implements ProductoRepository {
 		namedParameters.addValue("idTipoProducto", producto.getIdTipoProducto());
 		namedParameters.addValue("precioCompra", producto.getPrecioCompra());
 		namedParameters.addValue("precioVenta", producto.getPrecioVenta());
-		namedParameters.addValue("codigoDeBarrasTienda", producto.getCodigoBarrasTienda());
+		namedParameters.addValue("codigoBarrasTienda", producto.getCodigoBarrasTienda());
+		namedParameters.addValue("codigoBarrasMarca", producto.getCodigoBarrasTienda());
 		namedParameters.addValue("idProveedor", producto.getIdProveedor());
 		namedParameters.addValue("idMarca", producto.getIdMarca());
 		namedParameters.addValue("nombre", producto.getNombre());
-		namedParameters.addValue("fechaAgrego", producto.getFechaAgrego());
-		namedParameters.addValue("usuarioAgrego", producto.getUsuarioAgrego());
+		namedParameters.addValue("fechaAgrego", LocalDateTime.now());
+		//TODO Se debe agregar el usuario en Sesión con Spring Security
+		namedParameters.addValue("usuarioAgrego", 1);
 		namedJdbcTemplate.update(consultas.getProperty("producto.insert"), namedParameters);
 	}
 
 	@Override
 	public void update(ProductoModel producto) {
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("id", producto.getId());
 		namedParameters.addValue("descripcion", producto.getDescripcion());
-		namedParameters.addValue("idtTipoProducto", producto.getIdTipoProducto());
+		namedParameters.addValue("idTipoProducto", producto.getIdTipoProducto());
 		namedParameters.addValue("precioCompra", producto.getPrecioCompra());
 		namedParameters.addValue("precioVenta", producto.getPrecioVenta());
-		namedParameters.addValue("codigoDeBarrasTienda", producto.getCodigoBarrasTienda());
+		namedParameters.addValue("codigoBarrasTienda", producto.getCodigoBarrasTienda());
+		namedParameters.addValue("codigoBarrasMarca", producto.getCodigoBarrasTienda());
 		namedParameters.addValue("idProveedor", producto.getIdProveedor());
 		namedParameters.addValue("idMarca", producto.getIdMarca());
 		namedParameters.addValue("nombre", producto.getNombre());
-		namedParameters.addValue("fechaAgrego", producto.getFechaAgrego());
-		namedParameters.addValue("usuarioAgrego", producto.getUsuarioAgrego());
-		namedParameters.addValue("fechaModifico", producto.getFechaModifico());
-		namedParameters.addValue("usuarioModifico", producto.getUsuarioModifico());
+		namedParameters.addValue("fechaModifico", LocalDateTime.now());
+		//TODO Se debe agregar el usuario en Sesión con Spring Security
+		namedParameters.addValue("usuarioModifico",1);
 		namedJdbcTemplate.update(consultas.getProperty("producto.update"), namedParameters);
 	}
 }

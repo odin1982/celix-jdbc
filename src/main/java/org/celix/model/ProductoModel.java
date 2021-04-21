@@ -8,8 +8,11 @@ public class ProductoModel{
 	private String nombre;
 	private String descripcion;
 	private Long idTipoProducto;
+	private String descTipoProducto;
 	private Long idProveedor;
+	private String nombreProveedor;
 	private Long idMarca;
+	private String descMarca;
 	private BigDecimal precioCompra;
 	private BigDecimal precioVenta;
 	private String codigoBarrasTienda;
@@ -131,13 +134,39 @@ public class ProductoModel{
 		this.usuarioModifico = usuarioModifico;
 	}
 
+	public String getDescTipoProducto() {
+		return descTipoProducto;
+	}
+
+	public void setDescTipoProducto(String descTipoProducto) {
+		this.descTipoProducto = descTipoProducto;
+	}
+
+	public String getNombreProveedor() {
+		return nombreProveedor;
+	}
+
+	public void setNombreProveedor(String nombreProveedor) {
+		this.nombreProveedor = nombreProveedor;
+	}
+
+	public String getDescMarca() {
+		return descMarca;
+	}
+
+	public void setDescMarca(String descMarca) {
+		this.descMarca = descMarca;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductoModel [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", idTipoProducto="
-				+ idTipoProducto + ", idProveedor=" + idProveedor + ", idMarca=" + idMarca + ", precioCompra="
-				+ precioCompra + ", precioVenta=" + precioVenta + ", codigoBarrasTienda=" + codigoBarrasTienda
-				+ ", codigoBarrasMarca=" + codigoBarrasMarca + ", fechaAgrego=" + fechaAgrego + ", usuarioAgrego="
-				+ usuarioAgrego + ", fechaModifico=" + fechaModifico + ", usuarioModifico=" + usuarioModifico + "]";
+				+ idTipoProducto + ", descTipoProducto=" + descTipoProducto + ", idProveedor=" + idProveedor
+				+ ", nombreProveedor=" + nombreProveedor + ", idMarca=" + idMarca + ", descMarca=" + descMarca
+				+ ", precioCompra=" + precioCompra + ", precioVenta=" + precioVenta + ", codigoBarrasTienda="
+				+ codigoBarrasTienda + ", codigoBarrasMarca=" + codigoBarrasMarca + ", fechaAgrego=" + fechaAgrego
+				+ ", usuarioAgrego=" + usuarioAgrego + ", fechaModifico=" + fechaModifico + ", usuarioModifico="
+				+ usuarioModifico + "]";
 	}
 
 }

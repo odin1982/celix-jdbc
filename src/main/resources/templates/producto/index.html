@@ -28,27 +28,27 @@
 					      <th scope="col"  th:text="#{celix.title.codigo.barras.marca}"></th>
 					      <th scope="col"  th:text="#{celix.title.proveedor}"></th>
 					      <th scope="col"  th:text="#{celix.title.marca}"></th>
-					      <th scope="col"  th:text="#{celix.title.table.editar}"></th>
-					      <th scope="col"  th:text="#{celix.title.table.eliminar}"></th>
+					      <th scope="col"  th:text="#{celix.title.editar}"></th>
+					      <th scope="col"  th:text="#{celix.title.eliminar}"></th>
 					    </tr>
   					</thead>
   					<tbody>
 					    <tr th:each="producto : ${productos}">
-					      <th scope="row" th:text="${producto.idProducto}"></th>
+					      <th scope="row" th:text="${producto.id}"></th>
 					      <td th:text="${producto.nombre}"></td>
 					      <td th:text="${producto.descripcion}"></td>
-					      <td th:text="${producto.descripcionTipoProducto}"></td>
+					      <td th:text="${producto.descTipoProducto}"></td>
 					      <td th:text="${producto.precioCompra}"></td>
 					      <td th:text="${producto.precioVenta}"></td>
-					      <td th:text="${producto.codigoDeBarrasTienda}"></td>
-					      <td th:text="${producto.codigoDeBarrasMarca}"></td>
+					      <td th:text="${producto.codigoBarrasTienda}"></td>
+					      <td th:text="${producto.codigoBarrasMarca}"></td>
 					      <td th:text="${producto.nombreProveedor}"></td>
-					      <td th:text="${producto.descripcionMarca}"></td>
+					      <td th:text="${producto.descMarca}"></td>
 					      <td>
-					      	<a th:href="@{/producto/edit/{id}(id=${producto.idProducto})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
+					      	<a th:href="@{/producto/edit/{id}(id=${producto.id})}" class="btn btn-light" role="button" title="Editar"><i class="fas fa-edit"></i></a>
 					      </td>
 					      <td>
-					      	<a th:href="@{/producto/delete/{id}(id=${producto.idProducto})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a>
+					      	<a th:href="@{/producto/delete/{id}(id=${producto.id})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-light" role="button" title="Eliminar el registro."><i class="fas fa-trash"></i></a>
 					      </td>
 					    	
 					    </tr>
