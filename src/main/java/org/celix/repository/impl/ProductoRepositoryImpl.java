@@ -101,7 +101,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
 		namedParameters.addValue("precioCompra", producto.getPrecioCompra());
 		namedParameters.addValue("precioVenta", producto.getPrecioVenta());
 		namedParameters.addValue("codigoBarrasTienda", producto.getCodigoBarrasTienda());
-		namedParameters.addValue("codigoBarrasMarca", producto.getCodigoBarrasTienda());
+		namedParameters.addValue("codigoBarrasMarca", producto.getCodigoBarrasMarca());
 		namedParameters.addValue("idProveedor", producto.getIdProveedor());
 		namedParameters.addValue("idMarca", producto.getIdMarca());
 		namedParameters.addValue("nombre", producto.getNombre());
