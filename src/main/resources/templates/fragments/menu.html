@@ -13,13 +13,20 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#">Menu1</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Menu 2</a>
+				<li class="nav-item dropdown">
+					<a 	class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false" 
+						th:text="#{celix.menu.operacion}"></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" th:href="@{/operacion/compras/index}" th:text="#{celix.submenu.compras}"></a> 
+					</div>
 				</li>
 				<li class="nav-item dropdown">
 					<a 	class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> Cat&aacute;logos </a>
+						aria-haspopup="true" aria-expanded="false" 
+						th:text="#{celix.menu.catalogos}"></a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" th:href="@{/almacen/index}">Almac&eacute;n</a> 
 						<a class="dropdown-item" th:href="@{/estatusproducto/index}">Estatus producto</a> 
@@ -28,6 +35,7 @@
 						<a class="dropdown-item" th:href="@{/tienda/index}">Tienda</a>
 						<a class="dropdown-item" th:href="@{/tipo-producto/index}">Tipo producto</a>
 						<a class="dropdown-item" th:href="@{/tipo-usuario/index}">Tipo usuario</a>
+						<a class="dropdown-item" th:href="@{/tipo-documento/index}">Tipo documento</a>
 						<a class="dropdown-item" th:href="@{/producto/index}">Producto</a>
 					</div>
 				</li>

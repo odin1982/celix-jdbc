@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title th:text="#{celix.title.form.producto}"></title>
+	<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+	<header th:insert="fragments/menu :: menu-principal"></header>
+	<br>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header" th:text="#{celix.title.form.compras}"></div>
+			<div class="card-body">
+				<form th:action="@{/compras/save}" method="post" th:object="${compras}">
+				</form>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
+</body>
+</html>
