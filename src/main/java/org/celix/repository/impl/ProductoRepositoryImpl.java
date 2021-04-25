@@ -80,6 +80,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
 		namedParameters.addValue("descripcion", producto.getDescripcion());
 		namedParameters.addValue("idTipoProducto", producto.getIdTipoProducto());
 		namedParameters.addValue("precioCompra", producto.getPrecioCompra());
+		namedParameters.addValue("precioCompraIVA", producto.getPrecioCompraIVA());
 		namedParameters.addValue("precioVenta", producto.getPrecioVenta());
 		namedParameters.addValue("codigoBarrasTienda", producto.getCodigoBarrasTienda());
 		namedParameters.addValue("codigoBarrasMarca", producto.getCodigoBarrasTienda());
@@ -99,6 +100,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
 		namedParameters.addValue("descripcion", producto.getDescripcion());
 		namedParameters.addValue("idTipoProducto", producto.getIdTipoProducto());
 		namedParameters.addValue("precioCompra", producto.getPrecioCompra());
+		namedParameters.addValue("precioCompraIVA", producto.getPrecioCompraIVA());
 		namedParameters.addValue("precioVenta", producto.getPrecioVenta());
 		namedParameters.addValue("codigoBarrasTienda", producto.getCodigoBarrasTienda());
 		namedParameters.addValue("codigoBarrasMarca", producto.getCodigoBarrasMarca());

@@ -1,5 +1,7 @@
 package org.celix.service.impl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.celix.model.ProductoModel;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductoServiceImpl implements ProductoService{ 
+	private static final int DOS_DECIMALES = 2;
 	@Autowired
 	private ProductoRepository productoRepository;
 
@@ -50,11 +53,21 @@ public class ProductoServiceImpl implements ProductoService{
 
 	@Override
 	public void save(ProductoModel producto) {
+		if(producto.isPrecioCompraConIVA()) {
+			producto.setPrecioCompra(producto.getPrecioCompraIVA().divide(new BigDecimal(1.16), DOS_DECIMALES,RoundingMode.HALF_UP));
+		}else {
+			producto.setPrecioCompraIVA(producto.getPrecioCompra().multiply(new BigDecimal(1.16)).setScale(DOS_DECIMALES, RoundingMode.HALF_UP));
+		}
 		productoRepository.save(producto);
 	}
 
 	@Override
 	public void update(ProductoModel producto) {
+		if(producto.isPrecioCompraConIVA()) {
+			producto.setPrecioCompra(producto.getPrecioCompraIVA().divide(new BigDecimal(1.16), DOS_DECIMALES,RoundingMode.HALF_UP));
+		}else {
+			producto.setPrecioCompraIVA(producto.getPrecioCompra().multiply(new BigDecimal(1.16)).setScale(DOS_DECIMALES, RoundingMode.HALF_UP));
+		}
 		productoRepository.update(producto);
 	}
 

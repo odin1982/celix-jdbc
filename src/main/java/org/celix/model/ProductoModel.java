@@ -14,6 +14,8 @@ public class ProductoModel{
 	private Long idMarca;
 	private String descMarca;
 	private BigDecimal precioCompra;
+	private BigDecimal precioCompraIVA;
+	private boolean precioCompraConIVA;
 	private BigDecimal precioVenta;
 	private String codigoBarrasTienda;
 	private String codigoBarrasMarca;
@@ -158,15 +160,31 @@ public class ProductoModel{
 		this.descMarca = descMarca;
 	}
 
+	public BigDecimal getPrecioCompraIVA() {
+		return precioCompraIVA;
+	}
+
+	public void setPrecioCompraIVA(BigDecimal precioCompraIVA) {
+		this.precioCompraIVA = precioCompraIVA;
+	}
+	
+	public boolean isPrecioCompraConIVA() {
+		return precioCompraConIVA;
+	}
+
+	public void setPrecioCompraConIVA(boolean precioCompraConIVA) {
+		this.precioCompraConIVA = precioCompraConIVA;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductoModel [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", idTipoProducto="
 				+ idTipoProducto + ", descTipoProducto=" + descTipoProducto + ", idProveedor=" + idProveedor
 				+ ", nombreProveedor=" + nombreProveedor + ", idMarca=" + idMarca + ", descMarca=" + descMarca
-				+ ", precioCompra=" + precioCompra + ", precioVenta=" + precioVenta + ", codigoBarrasTienda="
-				+ codigoBarrasTienda + ", codigoBarrasMarca=" + codigoBarrasMarca + ", fechaAgrego=" + fechaAgrego
-				+ ", usuarioAgrego=" + usuarioAgrego + ", fechaModifico=" + fechaModifico + ", usuarioModifico="
-				+ usuarioModifico + "]";
+				+ ", precioCompra=" + precioCompra + ", precioCompraIVA=" + precioCompraIVA + ", precioCompraConIVA="
+				+ precioCompraConIVA + ", precioVenta=" + precioVenta + ", codigoBarrasTienda=" + codigoBarrasTienda
+				+ ", codigoBarrasMarca=" + codigoBarrasMarca + ", fechaAgrego=" + fechaAgrego + ", usuarioAgrego="
+				+ usuarioAgrego + ", fechaModifico=" + fechaModifico + ", usuarioModifico=" + usuarioModifico + "]";
 	}
 
 }
