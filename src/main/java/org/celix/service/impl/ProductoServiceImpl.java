@@ -53,22 +53,22 @@ public class ProductoServiceImpl implements ProductoService{
 
 	@Override
 	public void save(ProductoModel producto) {
-		if(producto.isPrecioCompraConIVA()) {
-			producto.setPrecioCompra(producto.getPrecioCompraIVA().divide(new BigDecimal(1.16), DOS_DECIMALES,RoundingMode.HALF_UP));
-		}else {
-			producto.setPrecioCompraIVA(producto.getPrecioCompra().multiply(new BigDecimal(1.16)).setScale(DOS_DECIMALES, RoundingMode.HALF_UP));
-		}
-		productoRepository.save(producto);
+		productoRepository.save(this.asignarPrecio(producto));
 	}
 
 	@Override
 	public void update(ProductoModel producto) {
+		productoRepository.update(this.asignarPrecio(producto));
+	}
+	
+	private ProductoModel asignarPrecio(ProductoModel producto) {
 		if(producto.isPrecioCompraConIVA()) {
 			producto.setPrecioCompra(producto.getPrecioCompraIVA().divide(new BigDecimal(1.16), DOS_DECIMALES,RoundingMode.HALF_UP));
 		}else {
 			producto.setPrecioCompraIVA(producto.getPrecioCompra().multiply(new BigDecimal(1.16)).setScale(DOS_DECIMALES, RoundingMode.HALF_UP));
 		}
-		productoRepository.update(producto);
+		
+		return producto;
 	}
 
 }
