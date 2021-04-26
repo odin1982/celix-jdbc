@@ -448,3 +448,14 @@ UNLOCK TABLES;
 ALTER TABLE `celix_prueba`.`producto` 
 ADD COLUMN `precio_compra_iva` DECIMAL(7,2) NOT NULL AFTER `usuario_modifico`;
 
+ALTER TABLE `celix_prueba`.`inventario` 
+CHANGE COLUMN `factura` `numero_documento` VARCHAR(50) NULL DEFAULT NULL ,
+CHANGE COLUMN `tipo_compra` `tipo_documento` INT NOT NULL ,
+ADD INDEX `inventario_tipo_documento_idx` (`tipo_documento` ASC) VISIBLE;
+;
+ALTER TABLE `celix_prueba`.`inventario` 
+ADD CONSTRAINT `inventario_tipo_documento`
+  FOREIGN KEY (`tipo_documento`)
+  REFERENCES `celix_prueba`.`tipo_documento` (`id_tipo_documento`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
