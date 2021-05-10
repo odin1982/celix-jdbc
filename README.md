@@ -7,3 +7,6 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin git@github.com:odin1982/celix-jdbc.git
 git push -u origin main
+
+#datepicker
+https://newtheme.eu/pasos-para-instalar-el-calendario-de-bootstrap-bootstrap-datepicker-2020/402/
