@@ -1,5 +1,10 @@
-var  contextPath = 'celix-jdbc/'
-function back(c){
-	console.log(c);
-	//window.location.href = '/index';
-}
+$(document).ready( function () {
+    $('#table_almacen').DataTable({
+    	  "columnDefs": [
+    		    { "width": "5%",  "targets": 0 },
+    		    { "width": "75%", "targets": 1 },
+    		    { "width": "10%", "targets": 2,"orderable": false },
+    		    { "width": "10%", "targets": 3,"orderable": false } 
+    		  ]
+    });
+} );
