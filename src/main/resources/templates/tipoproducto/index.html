@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title th:text="${@environment.getProperty('celix.title.form.tipo.producto')}"></title>
 <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" th:href="@{/DataTables/datatables.min.css}"/><!-- datatable -->
 </head>
 <body>
 	<header th:insert="fragments/menu :: menu-principal"></header>
@@ -15,13 +16,13 @@
 				<a class="btn btn-light" th:href="@{/tipo-producto/create}" role="button"><i class="fas fa-plus-square"></i> Nuevo</a>
                 <hr>
                 <div th:if="${message != null}" class='alert alert-success'role='alert'   th:text="${message}"></div>
-				<table class="table">
+				<table id="table_tipo_producto" class="table">
   					<thead class="thead-dark">
 					    <tr>
 					      <th scope="col"  th:text="${@environment.getProperty('celix.title.id')}"></th>
 					      <th scope="col"  th:text="${@environment.getProperty('celix.title.descripcion')}"></th>
-					      <th scope="col"  th:text="${@environment.getProperty('celix.title.table.editar')}"></th>
-					      <th scope="col"  th:text="${@environment.getProperty('celix.title.table.eliminar')}"></th>
+					      <th scope="col"  th:text="${@environment.getProperty('celix.title.editar')}"></th>
+					      <th scope="col"  th:text="${@environment.getProperty('celix.title.eliminar')}"></th>
 					    </tr>
   					</thead>
   					<tbody>
@@ -43,5 +44,7 @@
 	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
+	<script type="text/javascript" th:src="@{/DataTables/datatables.min.js}"></script><!-- datatable -->
+ 	<script type="text/javascript" th:src="@{/js/tipoproducto/tipoproducto.js}"></script><!-- datatable -->
 </body>
 </html>
