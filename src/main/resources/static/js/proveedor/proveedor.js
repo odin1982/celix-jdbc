@@ -11,6 +11,9 @@ $(document).ready( function () {
     		    { "width": "10%", "targets": 7 },
     		    { "width": "5%", "targets": 8,"orderable": false },
     		    { "width": "5%", "targets": 9,"orderable": false } 
-    		  ]
+    		  ],
+    		  "language": {
+  		        url: '../DataTables/es-mx.json'
+  		    }
     });
 } );

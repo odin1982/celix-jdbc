@@ -8,6 +8,9 @@ $(document).ready( function () {
     		    { "width": "10%", "targets": 4 },
     		    { "width": "10%", "targets": 5,"orderable": false },
     		    { "width": "10%", "targets": 6,"orderable": false } 
-    		  ]
+    		  ],
+    		  "language": {
+  		        url: '../DataTables/es-mx.json'
+  		    }
     });
 } );
