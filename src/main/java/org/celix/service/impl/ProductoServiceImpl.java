@@ -7,14 +7,19 @@ import java.util.List;
 import org.celix.model.ProductoModel;
 import org.celix.repository.ProductoRepository;
 import org.celix.service.ProductoService;
+import org.celix.util.MessagesPropertiesConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductoServiceImpl implements ProductoService{ 
 	private static final int DOS_DECIMALES = 2;
+	
 	@Autowired
 	private ProductoRepository productoRepository;
+	
+	@Autowired
+	private MessagesPropertiesConfig messages;
 
 	@Override
 	public List<ProductoModel> findAll() {
@@ -53,6 +58,7 @@ public class ProductoServiceImpl implements ProductoService{
 
 	@Override
 	public void save(ProductoModel producto) {
+		isCamposValidos(producto);
 		productoRepository.save(this.asignarPrecio(producto));
 	}
 
@@ -69,6 +75,42 @@ public class ProductoServiceImpl implements ProductoService{
 		}
 		
 		return producto;
+	}
+	
+	private void isCamposValidos(ProductoModel producto) {
+		if(producto.getNombre().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.nombre"));
+		}
+		
+		if(producto.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
+		
+		
+		if(producto.getIdTipoProducto().longValue() == 0) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.tipo.producto"));
+		}
+		
+		if(producto.getIdMarca() == 0) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.marca"));
+		}
+		
+		if(producto.getIdProveedor().longValue() == 0) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.proveedor"));
+		}
+		
+		if(producto.getPrecioCompra().doubleValue() == 0) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.precio.compra"));
+		}
+		
+		if(producto.isPrecioCompraConIVA() && producto.getPrecioCompraIVA().longValue() == 0 ) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.precio.iva"));
+		}
+		
+		if(producto.getPrecioVenta().doubleValue() == 0) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.precio.venta"));
+		}
+
 	}
 
 }

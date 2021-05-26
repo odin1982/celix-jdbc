@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.celix.model.MarcaModel;
 import org.celix.repository.MarcaRepository;
+import org.celix.util.MessagesPropertiesConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ public class MarcaServiceImpl implements org.celix.service.MarcaService{
 
 	@Autowired
 	private MarcaRepository marcaRepository;
+	
+	@Autowired
+	private MessagesPropertiesConfig messages;
 	
 	@Override
 	public List<MarcaModel> findAll() {
@@ -25,6 +29,9 @@ public class MarcaServiceImpl implements org.celix.service.MarcaService{
 
 	@Override
 	public void save(MarcaModel marca) {
+		if(marca.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
 		marcaRepository.save(marca);
 	}
 

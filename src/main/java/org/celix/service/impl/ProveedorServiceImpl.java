@@ -30,6 +30,13 @@ public class ProveedorServiceImpl implements ProveedorService{
 
 	@Override
 	public void save(ProveedorModel proveedor) {
+		if( proveedor.getNombre().isEmpty() || 
+			proveedor.getDireccion().isEmpty() || 
+			proveedor.getTelefono().isEmpty() ||
+			proveedor.getRfc().isEmpty() ||
+			proveedor.getRazonSocial().isEmpty()) {
+				throw new IllegalArgumentException("Invalid argument value");
+		}
 		proveedorRepository.save(proveedor);
 	}
 

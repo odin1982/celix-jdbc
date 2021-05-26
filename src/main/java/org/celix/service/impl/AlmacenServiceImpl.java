@@ -5,6 +5,7 @@ import java.util.List;
 import org.celix.model.AlmacenModel;
 import org.celix.repository.AlmacenRepository;
 import org.celix.service.AlmacenService;
+import org.celix.util.MessagesPropertiesConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ public class AlmacenServiceImpl implements AlmacenService{
 	
 	@Autowired
 	private AlmacenRepository almacenRepository;
+	
+	@Autowired
+	private MessagesPropertiesConfig messages;
 
 	@Override
 	public List<AlmacenModel> findAll() {
@@ -27,6 +31,9 @@ public class AlmacenServiceImpl implements AlmacenService{
 
 	@Override
 	public void save(AlmacenModel almacen) {
+		if(almacen.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
 		almacenRepository.save(almacen);
 	}
 
