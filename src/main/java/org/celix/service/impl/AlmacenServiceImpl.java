@@ -45,6 +45,9 @@ public class AlmacenServiceImpl implements AlmacenService{
 
 	@Override
 	public void update(AlmacenModel almacen) {
+		if(almacen.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
 		almacenRepository.update(almacen);
 	}
 	

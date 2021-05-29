@@ -42,6 +42,9 @@ public class EstatusProductoServiceImpl implements EstatusProductoService{
 
 	@Override
 	public void update(EstatusProductoModel estatusProducto) {
+		if(estatusProducto.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
 		estatusProductoRepository.update(estatusProducto);
 	}
 

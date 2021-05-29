@@ -5,6 +5,7 @@ import java.util.List;
 import org.celix.model.TipoDocumentoModel;
 import org.celix.repository.TipoDocumentoRepository;
 import org.celix.service.TipoDocumentoService;
+import org.celix.util.MessagesPropertiesConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService{
 	
 	@Autowired
 	private TipoDocumentoRepository tipoDocumentoRepository;
+	
+	@Autowired
+	private MessagesPropertiesConfig messages;
 
 	@Override
 	public List<TipoDocumentoModel> findAll() {
@@ -31,11 +35,17 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService{
 
 	@Override
 	public void save(TipoDocumentoModel tipoProducto) {
+		if(tipoProducto.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
 		tipoDocumentoRepository.save(tipoProducto);
 	}
 
 	@Override
 	public void update(TipoDocumentoModel tipoProducto) {
+		if(tipoProducto.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
 		tipoDocumentoRepository.update(tipoProducto);
 	}
 

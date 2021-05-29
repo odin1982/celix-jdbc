@@ -42,6 +42,9 @@ public class MarcaServiceImpl implements org.celix.service.MarcaService{
 
 	@Override
 	public void update(MarcaModel marca) {
+		if(marca.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
 		marcaRepository.update(marca);
 	}
 

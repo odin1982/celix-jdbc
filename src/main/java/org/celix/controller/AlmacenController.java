@@ -1,14 +1,15 @@
 package org.celix.controller;
 
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.celix.model.AlmacenModel;
 import org.celix.service.AlmacenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,7 @@ public class AlmacenController {
 	}
 	
 	@PostMapping("/save")
-	public String save(AlmacenModel almacen,RedirectAttributes redirect) {
+	public String save(AlmacenModel almacen,BindingResult result,RedirectAttributes redirect) {
 		if(almacen.getId() == null) {
 			logger.info("Guardando almacen ----> {}",almacen);
 			almacenService.save(almacen);
