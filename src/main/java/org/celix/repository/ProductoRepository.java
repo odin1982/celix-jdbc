@@ -14,4 +14,6 @@ public interface ProductoRepository {
 	public void deleteById(Long id);
 	public void save(ProductoModel producto);
 	public void update(ProductoModel producto);
+	public boolean existeCodigo(String codigoProducto);
+	public ProductoModel findByCodigoProducto(String codigoProducto);
 }

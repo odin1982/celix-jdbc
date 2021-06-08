@@ -66,6 +66,26 @@ public class ProductoRepositoryImpl implements ProductoRepository {
 		return namedJdbcTemplate.query(consultas.getProperty("producto.find.by.nombre"), namedParameters,
 				new BeanPropertyRowMapper<>(ProductoModel.class));
 	}
+	
+	@Override
+	public boolean existeCodigo(String codigoProducto) {
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("codigoProducto", codigoProducto);
+		Integer cantidadDeCodigos = namedJdbcTemplate.queryForObject(consultas.getProperty("producto.existe"),namedParameters, Integer.class);
+		if(cantidadDeCodigos > 0) {
+			return true;
+		}else {
+			return false;
+		}
+		 
+	}
+	
+	@Override
+	public ProductoModel findByCodigoProducto(String codigoProducto) {
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("codigoProducto", codigoProducto);
+		return namedJdbcTemplate.queryForObject(consultas.getProperty("producto.find.by.codigo.producto"),namedParameters, new BeanPropertyRowMapper<>(ProductoModel.class));
+	}
 
 	@Override
 	public void deleteById(Long id) {

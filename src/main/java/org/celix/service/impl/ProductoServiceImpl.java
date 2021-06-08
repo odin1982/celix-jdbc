@@ -58,12 +58,13 @@ public class ProductoServiceImpl implements ProductoService{
 
 	@Override
 	public void save(ProductoModel producto) {
-		isCamposValidos(producto);
+		validarCampos(producto);
 		productoRepository.save(this.asignarPrecio(producto));
 	}
 
 	@Override
 	public void update(ProductoModel producto) {
+		validarCampos(producto);
 		productoRepository.update(this.asignarPrecio(producto));
 	}
 	
@@ -77,15 +78,14 @@ public class ProductoServiceImpl implements ProductoService{
 		return producto;
 	}
 	
-	private void isCamposValidos(ProductoModel producto) {
-		if(producto.getNombre().isEmpty()) {
+	private void validarCampos(ProductoModel producto) {
+		if(producto.getNombre().trim().isEmpty()) {
 			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.nombre"));
 		}
 		
-		if(producto.getDescripcion().isEmpty()) {
+		if(producto.getDescripcion().trim().isEmpty()) {
 			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
 		}
-		
 		
 		if(producto.getIdTipoProducto().longValue() == 0) {
 			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.tipo.producto"));
@@ -99,7 +99,7 @@ public class ProductoServiceImpl implements ProductoService{
 			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.proveedor"));
 		}
 		
-		if(producto.getPrecioCompra().doubleValue() == 0) {
+		if(!producto.isPrecioCompraConIVA() && producto.getPrecioCompra().doubleValue() == 0) {
 			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.precio.compra"));
 		}
 		
@@ -111,6 +111,16 @@ public class ProductoServiceImpl implements ProductoService{
 			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.precio.venta"));
 		}
 
+	}
+
+	@Override
+	public boolean existeCodigo(String codigoProducto) {
+		return productoRepository.existeCodigo(codigoProducto);
+	}
+
+	@Override
+	public ProductoModel findByCodigoProducto(String codigoProducto) {
+		return productoRepository.findByCodigoProducto(codigoProducto);
 	}
 
 }

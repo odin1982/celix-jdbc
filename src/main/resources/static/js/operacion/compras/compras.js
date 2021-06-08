@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	var btnBuscarProducto = document.getElementById("buscarProducto");
 	$.datepicker.regional['es'] = {
 			 closeText: 'Cerrar',
 			 prevText: '< Ant',
@@ -17,5 +18,27 @@ $(document).ready(function() {
 			 yearSuffix: ''
 			 };
 			 $.datepicker.setDefaults($.datepicker.regional['es']);
-	 $( "#datepicker" ).datepicker();
+	 
+	$( "#datepicker" ).datepicker();
+	
+	
+	btnBuscarProducto.onclick = function buscarProducto(){
+		$.ajax({
+			type: 'GET',
+			url: 'buscar/producto',
+	        data: {
+	        	codigoProducto: document.getElementById('codigoProducto').value
+	        },
+	        success: function(producto) {
+	        	if(producto != undefined || !(producto == "")){
+	        		document.getElementById("labelNombreProducto").innerHTML = producto.nombre;
+	        	}
+	        },
+	        error: function (jqXHR) {
+	        	$(document.body).text('Error: ' + jqXHR.status);
+	        }
+	    });
+	}
+	
+	
 })
