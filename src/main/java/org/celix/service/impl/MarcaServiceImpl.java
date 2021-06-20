@@ -29,11 +29,10 @@ public class MarcaServiceImpl implements org.celix.service.MarcaService{
 
 	@Override
 	public void save(MarcaModel marca) {
-		if(marca.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validate(marca);
 		marcaRepository.save(marca);
 	}
+
 
 	@Override
 	public MarcaModel findById(Long id) {
@@ -42,10 +41,13 @@ public class MarcaServiceImpl implements org.celix.service.MarcaService{
 
 	@Override
 	public void update(MarcaModel marca) {
-		if(marca.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validate(marca);
 		marcaRepository.update(marca);
 	}
 
+	private void validate(MarcaModel marca) {
+		if(marca.getDescripcion().trim().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
+	}
 }

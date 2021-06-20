@@ -29,11 +29,10 @@ public class EstatusProductoServiceImpl implements EstatusProductoService{
 
 	@Override
 	public void save(EstatusProductoModel estatusProducto) {
-		if(estatusProducto.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validate(estatusProducto);
 		estatusProductoRepository.save(estatusProducto);
 	}
+
 
 	@Override
 	public EstatusProductoModel findById(Long id) {
@@ -42,10 +41,13 @@ public class EstatusProductoServiceImpl implements EstatusProductoService{
 
 	@Override
 	public void update(EstatusProductoModel estatusProducto) {
-		if(estatusProducto.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validate(estatusProducto);
 		estatusProductoRepository.update(estatusProducto);
 	}
 
+	private void validate(EstatusProductoModel estatusProducto) {
+		if(estatusProducto.getDescripcion().trim().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
+	}
 }

@@ -35,17 +35,14 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService{
 
 	@Override
 	public void save(TipoDocumentoModel tipoProducto) {
-		if(tipoProducto.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validarCampos(tipoProducto);
 		tipoDocumentoRepository.save(tipoProducto);
 	}
 
+
 	@Override
 	public void update(TipoDocumentoModel tipoProducto) {
-		if(tipoProducto.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validarCampos(tipoProducto);
 		tipoDocumentoRepository.update(tipoProducto);
 	}
 
@@ -54,4 +51,9 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService{
 		tipoDocumentoRepository.deleteById(id);
 	}
 
+	private void validarCampos(TipoDocumentoModel tipoProducto) {
+		if(tipoProducto.getDescripcion().trim().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
+	}
 }

@@ -31,9 +31,7 @@ public class AlmacenServiceImpl implements AlmacenService{
 
 	@Override
 	public void save(AlmacenModel almacen) {
-		if(almacen.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validate(almacen);
 		almacenRepository.save(almacen);
 	}
 
@@ -45,11 +43,14 @@ public class AlmacenServiceImpl implements AlmacenService{
 
 	@Override
 	public void update(AlmacenModel almacen) {
-		if(almacen.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validate(almacen);
 		almacenRepository.update(almacen);
 	}
 	
+	private void validate(AlmacenModel almacen) {
+		if(almacen.getDescripcion().trim().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
+	}
 	
 }

@@ -35,17 +35,14 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService{
 
 	@Override
 	public void save(TipoUsuarioModel tipoUsuario) {
-		if(tipoUsuario.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validarCampos(tipoUsuario);
 		tipoUsuarioRepository.save(tipoUsuario);
 	}
 
+
 	@Override
 	public void update(TipoUsuarioModel tipoUsuario) {
-		if(tipoUsuario.getDescripcion().isEmpty()) {
-			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
-		}
+		validarCampos(tipoUsuario);
 		tipoUsuarioRepository.update(tipoUsuario);
 	}
 
@@ -54,4 +51,9 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService{
 		tipoUsuarioRepository.deleteById(id);
 	}
 
+	private void validarCampos(TipoUsuarioModel tipoUsuario) {
+		if(tipoUsuario.getDescripcion().isEmpty()) {
+			throw new IllegalArgumentException(messages.getProperty("celix.exceptions.argumento.invalido.descripcion"));
+		}
+	}
 }

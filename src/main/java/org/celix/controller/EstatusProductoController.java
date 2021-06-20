@@ -65,7 +65,7 @@ public class EstatusProductoController {
 		logger.info("Editing id estatus producto ----> {}",id);
 		EstatusProductoModel estatusProducto = estatusProductoService.findById(id);
 		model.addAttribute("estatusProducto", estatusProducto);
-		return "estatusProducto/create";
+		return "estatusproducto/create";
 	}
 	
 }
