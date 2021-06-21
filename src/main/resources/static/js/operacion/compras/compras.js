@@ -30,8 +30,12 @@ $(document).ready(function() {
 	        	codigoProducto: document.getElementById('codigoProducto').value
 	        },
 	        success: function(producto) {
-	        	if(producto != undefined || !(producto == "")){
+	        	if(producto.id != null){
 	        		document.getElementById("labelNombreProducto").innerHTML = producto.nombre;
+	        		document.getElementById("precioCompra").value = producto.precioCompra;
+	        		document.getElementById("precioCompraIVA").value = producto.precioCompraIVA;
+	        	}else{
+	        		document.getElementById("labelNombreProducto").innerHTML = "No existe producto";
 	        	}
 	        },
 	        error: function (jqXHR) {

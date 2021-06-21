@@ -48,7 +48,7 @@ public class ComprasController {
 		if(productoService.existeCodigo(codigoProducto)) {
 			return productoService.findByCodigoProducto(codigoProducto);
 		}else {
-			return null;
+			return new ProductoModel();
 		}
 	}
 }
