@@ -21,6 +21,21 @@ $(document).ready(function() {
 	 
 	$( "#datepicker" ).datepicker();
 	
+	$('#table_compras').DataTable({
+	  	 "columnDefs": [
+		    { "targets": 0, "orderable":false },
+		    { "targets": 1, "orderable":false },
+		    { "targets": 2, "orderable":false },
+		    { "targets": 3, "orderable":false },
+		    { "targets": 4, "orderable":false },
+		    { "targets": 5, "orderable":false },
+		    { "targets": 6, "orderable":false },
+		    { "targets": 7, "orderable":false } 
+		  ],
+		  "language": {
+		        url: '../../DataTables/es-mx.json'
+		    }
+	});
 	
 	btnBuscarProducto.onclick = function buscarProducto(){
 		$.ajax({

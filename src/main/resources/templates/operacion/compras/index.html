@@ -6,116 +6,160 @@
 	<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 	<link rel="stylesheet" th:href="@{/jquery-ui-1.12.1-datepicker/jquery-ui.css}"><!-- datepicker -->
   	<link rel="stylesheet" th:href="@{/jquery-ui-1.12.1-datepicker/jquery-ui.theme.css}"><!-- datepicker -->
+  	<link rel="stylesheet" type="text/css" th:href="@{/DataTables/datatables.min.css}"/><!-- datatable -->
 </head>
 <body>
 	<header th:insert="fragments/menu :: menu-principal"></header>
 	<br>
-	<div class="container">
-		<div class="card">
-			<div class="card-header" th:text="#{celix.title.form.compras}"></div>
-			<div class="card-body">
-				<form th:action="@{/compras/save}" method="post" th:object="${compras}">
-					<div class="form-group row">
-  						<label for="selectProveedor" class="col-sm-3 col-form-label" th:text="#{celix.title.proveedor}"></label>
-	  					<div class="col-sm-9">
-		  					<select id="selectProveedor" name="selectProveedor" th:field="*{idProveedor}" class="form-control">
-		        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
-		        				<option th:each="proveedor :${ proveedores }" th:value="${proveedor.id}" th:text="${proveedor.nombre}"></option>
-		      				</select>
-	      				</div>
-	      			</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-header" th:text="#{celix.title.form.compras}"></div>
+					<div class="card-body">
+						<form th:action="@{/compras/save}" method="post" th:object="${compras}">
+							<div class="form-group row">
+  								<label for="selectProveedor" class="col-sm-3 col-form-label" th:text="#{celix.title.proveedor}"></label>
+	  							<div class="col-sm-9">
+		  							<select id="selectProveedor" name="selectProveedor" th:field="*{idProveedor}" class="form-control">
+		        						<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
+		        						<option th:each="proveedor :${ proveedores }" th:value="${proveedor.id}" th:text="${proveedor.nombre}"></option>
+		      						</select>
+	      						</div>
+	      					</div>
   				
-	      			<div class="form-group row">
-    					<label for="numeroDocumento" class="col-sm-3 col-form-label" th:text="#{celix.title.numero.documento}"></label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento" th:field="*{numeroDocumento}" th:attr="placeholder=#{celix.placeholder.numero.documento}">
-    					</div>
-	      			</div>
+			      			<div class="form-group row">
+		    					<label for="numeroDocumento" class="col-sm-3 col-form-label" th:text="#{celix.title.numero.documento}"></label>
+		    					<div class="col-sm-9">
+		      						<input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento" th:field="*{numeroDocumento}" th:attr="placeholder=#{celix.placeholder.numero.documento}">
+		    					</div>
+			      			</div>
 	      			
-	      			<div class="form-group row">
-    					<label for="selectTipoDocumento" class="col-sm-3 col-form-label" th:text="#{celix.title.tipo.documento}"></label>
-	  					<div class="col-sm-9">
-		  					<select id="selectTipoDocumento" name="selectTipoDocumento" th:field="*{idTipoDocumento}" class="form-control">
-		        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
-		        				<option th:each="tipoDocumento :${ tiposDocumento }" th:value="${tipoDocumento.id}" th:text="${tipoDocumento.descripcion}"></option>
-		      				</select>
-	      				</div>
-	      			</div>
+			      			<div class="form-group row">
+		    					<label for="selectTipoDocumento" class="col-sm-3 col-form-label" th:text="#{celix.title.tipo.documento}"></label>
+			  					<div class="col-sm-9">
+				  					<select id="selectTipoDocumento" name="selectTipoDocumento" th:field="*{idTipoDocumento}" class="form-control">
+				        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
+				        				<option th:each="tipoDocumento :${ tiposDocumento }" th:value="${tipoDocumento.id}" th:text="${tipoDocumento.descripcion}"></option>
+				      				</select>
+			      				</div>
+			      			</div>
         			
-        			<div class="form-group row">
-            			<label for="fechaCompra" class="col-sm-3 col-form-label" th:text="#{celix.title.fecha.compra}"></label>
-        				<div class="col-sm-9">
-        					<input type="text" class="form-control" id="datepicker" th:attr="placeholder=#{celix.placeholder.fecha}">
-        				</div>
-        			</div>
+		        			<div class="form-group row">
+		            			<label for="fechaCompra" class="col-sm-3 col-form-label" th:text="#{celix.title.fecha.compra}"></label>
+		        				<div class="col-sm-9">
+		        					<input type="text" class="form-control" id="datepicker" th:attr="placeholder=#{celix.placeholder.fecha}">
+		        				</div>
+		        			</div>
         			
-        			<div class="form-group row">
-    					<label for="selectAlmacen" class="col-sm-3 col-form-label" th:text="#{celix.title.enviar.almacen}"></label>
-	  					<div class="col-sm-9">
-		  					<select id="selectAlmacen" name="selectAlmacen" th:field="*{idTipoDocumento}" class="form-control">
-		        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
-		        				<option th:each="almacen :${ almacenes }" th:value="${almacen.id}" th:text="${almacen.descripcion}"></option>
-		      				</select>
-	      				</div>
-	      			</div>
-	      		</form>
+		        			<div class="form-group row">
+		    					<label for="selectAlmacen" class="col-sm-3 col-form-label" th:text="#{celix.title.enviar.almacen}"></label>
+			  					<div class="col-sm-9">
+				  					<select id="selectAlmacen" name="selectAlmacen" th:field="*{idTipoDocumento}" class="form-control">
+				        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
+				        				<option th:each="almacen :${ almacenes }" th:value="${almacen.id}" th:text="${almacen.descripcion}"></option>
+				      				</select>
+			      				</div>
+			      			</div>
+	      				</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-header">Producto</div>
+					<div class="card-body">
+						<div class="form-group row">
+		    				<label for="codigoProducto" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.producto}"></label>
+		    				<div class="col-sm-8">
+		      					<input type="text" class="form-control" id="codigoProducto" name="codigoProducto"  th:attr="placeholder=#{celix.placeholder.codigo.producto}">
+		    				</div>
+		    				<div class="col-sm-1">
+		      					<button type="button" class="btn btn-light" id="buscarProducto"><i class="fa fa-search"></i></button>
+		    				</div>
+			      		</div>
+			      		<div class="form-group row">
+		    				<label class="col-sm-3 col-form-label" th:text="#{celix.title.form.producto}"></label>
+		    				<label class="col-sm-9 col-form-label" id="labelNombreProducto"></label>
+			      		</div>
+			      		<div class="form-group row">
+		    				<label for="precioCompraConIVA" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra.iva.pregunta}"></label>
+		    				<div class="col-sm-9" style="padding-left:37px;">
+		      					<input type="checkbox" class="form-check-input" id="precioCompraConIVA" name="precioCompraConIVA" onclick="changeStatusPrecioCompraConIVA();">
+		    				</div>
+		  				</div>
+	  					<div class="form-group row">
+	    					<label for="precioCompra" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra}"></label>
+	    					<div class="col-sm-9">
+	      						<input type="text" class="form-control" id="precioCompra" name="precioCompra" placeholder="Ingresa el precio de compra">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<label for="precioCompraIVA" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra.iva}"></label>
+	    					<div class="col-sm-9">
+	      						<input type="text" class="form-control" id="precioCompraIVA" name="precioCompraIVA" placeholder="Ingresa el precio de compra con IVA">
+	    					</div>
+	  					</div>
+	  					<div class="form-group row">
+	    					<label for="cantidad" class="col-sm-3 col-form-label" th:text="#{celix.title.cantidad}"></label>
+	    					<div class="col-sm-3">
+	      						<input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Ingresa la cantidad de producto">
+	    					</div>
+	    					<label for="fijarCantidad" class="col-sm-2 col-form-label" th:text="#{celix.title.fijar.cantidad}" style="padding-left: 73px;"></label>
+	    					<div class="col-sm-1" style="padding-top: 9px;">
+	      						<input type="checkbox" class="form-check-input" id="chkFijarCantidad" name="chkFijarCantidad" onclick="">
+	    					</div>
+	    					<div class="col-sm-2">
+	      						<button type="button" class="btn btn-light float-right"><i class="fas fa-save"></i></button>
+	    					</div>
+	  					</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<br>
-		<div class="card">
-			<div class="card-header">Producto</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+			<div class="card-header" th:text="${@environment.getProperty('celix.title.form.agregar.inventario')}"></div>
 			<div class="card-body">
-				<div class="form-group row">
-    				<label for="codigoProducto" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.producto}"></label>
-    				<div class="col-sm-8">
-      					<input type="text" class="form-control" id="codigoProducto" name="codigoProducto"  th:attr="placeholder=#{celix.placeholder.codigo.producto}">
-    				</div>
-    				<div class="col-sm-1">
-      					<button type="button" class="btn btn-light" id="buscarProducto"><i class="fa fa-search"></i></button>
-    				</div>
-	      		</div>
-	      		<div class="form-group row">
-    				<label class="col-sm-3 col-form-label" th:text="#{celix.title.form.producto}"></label>
-    				<label class="col-sm-9 col-form-label" id="labelNombreProducto"></label>
-	      		</div>
-	      		<div class="form-group row">
-    					<label for="precioCompraConIVA" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra.iva.pregunta}"></label>
-    					<div class="col-sm-9" style="padding-left:37px;">
-      						<input type="checkbox" class="form-check-input" id="precioCompraConIVA" name="precioCompraConIVA" onclick="changeStatusPrecioCompraConIVA();">
-    					</div>
-  					</div>
-  					<div class="form-group row">
-    					<label for="precioCompra" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra}"></label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="precioCompra" name="precioCompra" placeholder="Ingresa el precio de compra">
-    					</div>
-  					</div>
-  					<div class="form-group row">
-    					<label for="precioCompraIVA" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra.iva}"></label>
-    					<div class="col-sm-9">
-      						<input type="text" class="form-control" id="precioCompraIVA" name="precioCompraIVA" placeholder="Ingresa el precio de compra con IVA">
-    					</div>
-  					</div>
-  					<div class="form-group row">
-    					<label for="cantidad" class="col-sm-3 col-form-label" th:text="#{celix.title.cantidad}"></label>
-    					<div class="col-sm-3">
-      						<input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Ingresa la cantidad de producto">
-    					</div>
-    					<label for="fijarCantidad" class="col-sm-2 col-form-label" th:text="#{celix.title.fijar.cantidad}" style="padding-left: 73px;"></label>
-    					<div class="col-sm-1" style="padding-top: 9px;">
-      						<input type="checkbox" class="form-check-input" id="chkFijarCantidad" name="chkFijarCantidad" onclick="">
-    					</div>
-    					<div class="col-sm-2">
-      						<button type="button" class="btn btn-light float-right"><i class="fas fa-save"></i></button>
-    					</div>
-  					</div>
+				<table id="table_compras" class="table">
+    				<thead class="thead-dark">
+					    <tr>
+						  <th scope="col"  th:text="#{'celix.title.codigo.barras.tienda'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.codigo.barras.marca'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.descripcion'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.precio.compra'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.precio.compra.iva'}"></th> 
+					      <th scope="col"  th:text="#{'celix.title.precio.venta'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.cantidad'}"></th>
+					      <th scope="col"  th:text="#{'celix.title.eliminar'}"></th>
+					    </tr>
+  					</thead>
+  					<tbody>
+					    <tr>
+					    	<th></th>
+					    	<th></th>
+					    	<th></th>
+					    	<th></th>
+					    	<th></th>
+					    	<th></th>
+					    	<th></th>
+					    	<th></th>
+					    </tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 			</div>
 		</div>
 	</div>
+	
 	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
-    <script th:src="@{/js/operacion/compras/compras.js}"></script>
   	<script th:src="@{/jquery-ui-1.12.1-datepicker/jquery-ui.js}"></script><!-- datepicker -->
+  	<script type="text/javascript" th:src="@{/DataTables/datatables.min.js}"></script><!-- datatable -->
+    <script th:src="@{/js/operacion/compras/compras.js}"></script>
 </body>
 </html>
