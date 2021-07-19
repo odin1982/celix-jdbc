@@ -1,5 +1,15 @@
 $(document).ready(function() {
-	var btnBuscarProducto = document.getElementById("buscarProducto");
+	var btnBuscarProducto 	= document.getElementById("buscarProducto");
+	var btnAgregarProducto 	= document.getElementById("agregarProducto");
+	
+	var txtCodigoProducto 	= document.getElementById("codigoProducto");
+	var txtPrecioCompra 	= document.getElementById("precioCompra");
+	var txtPrecioCompraIVA 	= document.getElementById("precioCompraIVA");
+	var txtCantidad 		= document.getElementById("cantidad");
+	var txtPrecioVenta 		= document.getElementById("precioVenta");
+	
+	var lblNombreProducto 	= document.getElementById("labelNombreProducto");
+	
 	$.datepicker.regional['es'] = {
 			 closeText: 'Cerrar',
 			 prevText: '< Ant',
@@ -21,21 +31,56 @@ $(document).ready(function() {
 	 
 	$( "#datepicker" ).datepicker();
 	
-	$('#table_compras').DataTable({
+	var tablaCompras = $('#table_compras').DataTable({
 	  	 "columnDefs": [
-		    { "targets": 0, "orderable":false },
-		    { "targets": 1, "orderable":false },
-		    { "targets": 2, "orderable":false },
-		    { "targets": 3, "orderable":false },
-		    { "targets": 4, "orderable":false },
-		    { "targets": 5, "orderable":false },
-		    { "targets": 6, "orderable":false },
-		    { "targets": 7, "orderable":false } 
-		  ],
+		    { "targets": 0, "orderable":false, "width": "18%" },
+		    { "targets": 1, "orderable":false, "width": "30%" },
+		    { "targets": 2, "orderable":false,"className": "text-right" },
+		    { "targets": 3, "orderable":false,"className": "text-right" },
+		    { "targets": 4, "orderable":false,"className": "text-right" },
+		    { "targets": 5, "orderable":false,"className": "text-right" },
+		    { "targets": 6, "orderable":false,"className": "text-center", "render": function ( data, type, row, meta ) { return '<button type="button" id="eliminarFila'+meta.row+'" class="btn btn-light" ><i class="fas fa-trash"></i></button>';} }
+		    ],
 		  "language": {
 		        url: '../../DataTables/es-mx.json'
 		    }
 	});
+	
+	$('#table_compras tbody').on( 'click', 'button', function () {
+		tablaCompras
+        .row( $(this).parents('tr') )
+        .remove()
+        .draw();
+    } );
+	
+	btnAgregarProducto.onclick = function agregarProducto(){
+		var datosTabla 		= tablaCompras.rows().data();
+		var existeProducto 	= false;
+		var rowExistente 	= null;
+		for(var numRow = 0; numRow<datosTabla.length;numRow++){
+			if(datosTabla[numRow][0] === txtCodigoProducto.value ){
+				console.log("Ya existe el producto");
+				existeProducto = true;
+				rowExistente = numRow;
+			}
+		}
+		
+		if(existeProducto){
+			var row = tablaCompras.row( rowExistente ).data() ;
+			row[5]	= parseInt(datosTabla[rowExistente][5]) + parseInt(txtCantidad.value);
+			tablaCompras.row(rowExistente).data(row).draw();
+		}else{
+			tablaCompras.row.add([
+				txtCodigoProducto.value,
+				lblNombreProducto.textContent,
+				txtPrecioCompra.value,
+				txtPrecioCompraIVA.value,
+				txtPrecioVenta.value,
+				txtCantidad.value
+				]).draw( false );
+		}
+		
+	}
 	
 	btnBuscarProducto.onclick = function buscarProducto(){
 		$.ajax({
@@ -49,6 +94,7 @@ $(document).ready(function() {
 	        		document.getElementById("labelNombreProducto").innerHTML = producto.nombre;
 	        		document.getElementById("precioCompra").value = producto.precioCompra;
 	        		document.getElementById("precioCompraIVA").value = producto.precioCompraIVA;
+	        		document.getElementById("precioVenta").value = producto.precioVenta;
 	        	}else{
 	        		document.getElementById("labelNombreProducto").innerHTML = "No existe producto";
 	        	}
@@ -57,7 +103,9 @@ $(document).ready(function() {
 	        	$(document.body).text('Error: ' + jqXHR.status);
 	        }
 	    });
-	}
+	};
+	
+	
 	
 	
 })
