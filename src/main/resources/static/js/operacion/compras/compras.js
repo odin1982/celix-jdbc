@@ -7,6 +7,7 @@ $(document).ready(function() {
 	var txtPrecioCompraIVA 	= document.getElementById("precioCompraIVA");
 	var txtCantidad 		= document.getElementById("cantidad");
 	var txtPrecioVenta 		= document.getElementById("precioVenta");
+	var txtIdProducto 		= document.getElementById("idProducto");
 	
 	var lblNombreProducto 	= document.getElementById("labelNombreProducto");
 	
@@ -33,13 +34,14 @@ $(document).ready(function() {
 	
 	var tablaCompras = $('#table_compras').DataTable({
 	  	 "columnDefs": [
-		    { "targets": 0, "orderable":false, "width": "18%" },
-		    { "targets": 1, "orderable":false, "width": "30%" },
-		    { "targets": 2, "orderable":false,"className": "text-right" },
+	  		{ "targets": 0, "visible": false },
+		    { "targets": 1, "orderable":false, "width": "18%" },
+		    { "targets": 2, "orderable":false, "width": "30%" },
 		    { "targets": 3, "orderable":false,"className": "text-right" },
 		    { "targets": 4, "orderable":false,"className": "text-right" },
 		    { "targets": 5, "orderable":false,"className": "text-right" },
-		    { "targets": 6, "orderable":false,"className": "text-center", "render": function ( data, type, row, meta ) { return '<button type="button" id="eliminarFila'+meta.row+'" class="btn btn-light" ><i class="fas fa-trash"></i></button>';} }
+		    { "targets": 6, "orderable":false,"className": "text-right" },
+		    { "targets": 7, "orderable":false,"className": "text-center", "render": function ( data, type, row, meta ) { return '<button type="button" id="eliminarFila'+meta.row+'" class="btn btn-light" ><i class="fas fa-trash"></i></button>';} }
 		    ],
 		  "language": {
 		        url: '../../DataTables/es-mx.json'
@@ -58,7 +60,7 @@ $(document).ready(function() {
 		var existeProducto 	= false;
 		var rowExistente 	= null;
 		for(var numRow = 0; numRow<datosTabla.length;numRow++){
-			if(datosTabla[numRow][0] === txtCodigoProducto.value ){
+			if(datosTabla[numRow][0] === txtIdProducto.value ){
 				console.log("Ya existe el producto");
 				existeProducto = true;
 				rowExistente = numRow;
@@ -67,10 +69,11 @@ $(document).ready(function() {
 		
 		if(existeProducto){
 			var row = tablaCompras.row( rowExistente ).data() ;
-			row[5]	= parseInt(datosTabla[rowExistente][5]) + parseInt(txtCantidad.value);
+			row[6]	= parseInt(datosTabla[rowExistente][6]) + parseInt(txtCantidad.value);
 			tablaCompras.row(rowExistente).data(row).draw();
 		}else{
 			tablaCompras.row.add([
+				txtIdProducto.value,
 				txtCodigoProducto.value,
 				lblNombreProducto.textContent,
 				txtPrecioCompra.value,
@@ -91,6 +94,7 @@ $(document).ready(function() {
 	        },
 	        success: function(producto) {
 	        	if(producto.id != null){
+	        		document.getElementById("idProducto").value = producto.id;
 	        		document.getElementById("labelNombreProducto").innerHTML = producto.nombre;
 	        		document.getElementById("precioCompra").value = producto.precioCompra;
 	        		document.getElementById("precioCompraIVA").value = producto.precioCompraIVA;

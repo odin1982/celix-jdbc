@@ -69,6 +69,7 @@
 				<div class="card">
 					<div class="card-header">Producto</div>
 					<div class="card-body">
+						<input type="hidden" class="form-control" id="idProducto" name="idProducto">
 						<input type="hidden" class="form-control" id="precioVenta" name="precioVenta">
 						<div class="form-group row">
 		    				<label for="codigoProducto" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.producto}"></label>
@@ -127,6 +128,7 @@
 				<table id="table_compras" class="table">
     				<thead class="thead-dark">
 					    <tr>
+					      <th scope="col"  th:text="#{'celix.title.id'}"></th>
 						  <th scope="col"  th:text="#{'celix.title.codigo.barras.tienda'}"></th>
 					      <th scope="col"  th:text="#{'celix.title.descripcion'}"></th>
 					      <th scope="col"  th:text="#{'celix.title.precio.compra'}"></th>
