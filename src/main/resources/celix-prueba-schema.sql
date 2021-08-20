@@ -459,3 +459,10 @@ ADD CONSTRAINT `inventario_tipo_documento`
   REFERENCES `celix_prueba`.`tipo_documento` (`id_tipo_documento`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  
+  
+  ALTER TABLE `celix_prueba`.`inventario` 
+ADD COLUMN `precio_compra` DECIMAL(7,2) NOT NULL AFTER `id_almacen`,
+ADD COLUMN `precio_compra_iva` DECIMAL(7,2) NOT NULL AFTER `precio_compra`,
+ADD COLUMN `id_proveedor` INT NOT NULL AFTER `precio_compra_iva`,
+ADD COLUMN `fecha_compra` DATETIME NOT NULL AFTER `id_proveedor`;

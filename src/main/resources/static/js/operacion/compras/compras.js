@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var btnBuscarProducto 	= document.getElementById("buscarProducto");
 	var btnAgregarProducto 	= document.getElementById("agregarProducto");
+	var btnSaveInventario	= document.getElementById("saveInventario");
 	
 	var txtCodigoProducto 	= document.getElementById("codigoProducto");
 	var txtPrecioCompra 	= document.getElementById("precioCompra");
@@ -8,6 +9,13 @@ $(document).ready(function() {
 	var txtCantidad 		= document.getElementById("cantidad");
 	var txtPrecioVenta 		= document.getElementById("precioVenta");
 	var txtIdProducto 		= document.getElementById("idProducto");
+	var txtNumeroDocumento 	= document.getElementById("numeroDocumento");
+	
+	var selProveedor		= document.getElementById("selectProveedor");
+	var selTipoDocumento	= document.getElementById("selectTipoDocumento");
+	var selAlmacen		= document.getElementById("selectAlmacen");
+	
+	var dateFechaCompra 	= document.getElementById("datepicker");
 	
 	var lblNombreProducto 	= document.getElementById("labelNombreProducto");
 	
@@ -109,7 +117,45 @@ $(document).ready(function() {
 	    });
 	};
 	
-	
+	btnSaveInventario.onclick = function saveInventario(){
+		var productos = new Array();
+		var data = tablaCompras.rows().data();
+		
+		for (let i = 0; i < data.length; i++) {
+  			var producto = {
+				"id": 					data[0][0],
+				"codigoBarrasTienda": 	data[0][1],
+				"descripcion": 			data[0][2],
+				"precioCompra": 		data[0][3],
+				"precioCompraIVA": 		data[0][4],
+				"precioVenta": 			data[0][5],
+				"cantidad": 			data[0][6]
+			};
+			productos.push(producto);
+		}
+		
+		var compra = {
+			"idProveedor": 		selProveedor.value,
+			"numeroDocumento": 	txtNumeroDocumento.value,
+			"idTipoDocumento":	selTipoDocumento.value,
+			"fechaCompra":		dateFechaCompra.value,
+			"idAlmacen":		selAlmacen.value,
+			"productos": 		productos,
+		}
+		
+		$.ajax({
+			type: 'POST',
+			url: 'save/compras',
+	        data: JSON.stringify(compra),
+	        dataType: 'json',
+	        contentType: 'application/json',
+	        success: function(producto) {
+	        },
+	        error: function (jqXHR) {
+	        	$(document.body).text('Error: ' + jqXHR.status);
+	        }
+	    });
+	}
 	
 	
 })
