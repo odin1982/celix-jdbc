@@ -466,3 +466,58 @@ ADD COLUMN `precio_compra` DECIMAL(7,2) NOT NULL AFTER `id_almacen`,
 ADD COLUMN `precio_compra_iva` DECIMAL(7,2) NOT NULL AFTER `precio_compra`,
 ADD COLUMN `id_proveedor` INT NOT NULL AFTER `precio_compra_iva`,
 ADD COLUMN `fecha_compra` DATETIME NOT NULL AFTER `id_proveedor`;
+
+ALTER TABLE `celix_prueba`.`inventario` 
+DROP FOREIGN KEY `inventario_producto`,
+DROP FOREIGN KEY `inventario_estatusproducto`,
+DROP FOREIGN KEY `inventario_almacen`;
+ALTER TABLE `celix_prueba`.`inventario` 
+DROP COLUMN `precio_compra_iva`,
+DROP COLUMN `precio_compra`,
+DROP COLUMN `id_almacen`,
+DROP COLUMN `id_estatus_producto`,
+DROP COLUMN `id_producto`,
+DROP INDEX `inventario_almacen_idx` ,
+DROP INDEX `inventario_estatusproducto_idx` ,
+DROP INDEX `inventario_producto_idx` ;
+;
+
+CREATE TABLE `celix_prueba`.`detalle_inventario_producto` (
+  `id_detalle_inventario_producto` INT NOT NULL AUTO_INCREMENT,
+  `id_inventario` INT NOT NULL,
+  `id_producto` INT NOT NULL,
+  `id_estatus_producto` INT NOT NULL,
+  `id_almacen` INT NOT NULL,
+  `precio_compra` DECIMAL(7,2) NOT NULL,
+  `precio_compra_iva` DECIMAL(7,2) NOT NULL,
+  PRIMARY KEY (`id_detalle_inventario_producto`),
+  INDEX `inventario_fk_idx` (`id_inventario` ASC) VISIBLE,
+  INDEX `producto_fk_idx` (`id_producto` ASC) VISIBLE,
+  INDEX `estatus_producto_fk_idx` (`id_estatus_producto` ASC) VISIBLE,
+  INDEX `almacen_fk_idx` (`id_almacen` ASC) VISIBLE,
+  CONSTRAINT `inventario_fk`
+    FOREIGN KEY (`id_inventario`)
+    REFERENCES `celix_prueba`.`inventario` (`id_inventario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `producto_fk`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `celix_prueba`.`producto` (`id_producto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `estatus_producto_fk`
+    FOREIGN KEY (`id_estatus_producto`)
+    REFERENCES `celix_prueba`.`estatus_producto` (`id_estatus_producto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `almacen_fk`
+    FOREIGN KEY (`id_almacen`)
+    REFERENCES `celix_prueba`.`almacen` (`id_almacen`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+    
+    ALTER TABLE `celix_prueba`.`detalle_celular` 
+RENAME TO  `celix_prueba`.`detalle_inventario_celular` ;
+
+ALTER TABLE `celix_prueba`.`detalle_chip` 
+RENAME TO  `celix_prueba`.`detalle_inventario_chip` ;
