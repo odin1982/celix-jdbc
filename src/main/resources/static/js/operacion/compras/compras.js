@@ -123,13 +123,13 @@ $(document).ready(function() {
 		
 		for (let i = 0; i < data.length; i++) {
   			var producto = {
-				"id": 					data[0][0],
-				"codigoBarrasTienda": 	data[0][1],
-				"descripcion": 			data[0][2],
-				"precioCompra": 		data[0][3],
-				"precioCompraIVA": 		data[0][4],
-				"precioVenta": 			data[0][5],
-				"cantidad": 			data[0][6]
+				"id": 					data[i][0],
+				"codigoBarrasTienda": 	data[i][1],
+				"descripcion": 			data[i][2],
+				"precioCompra": 		data[i][3],
+				"precioCompraIVA": 		data[i][4],
+				"precioVenta": 			data[i][5],
+				"cantidad": 			data[i][6]
 			};
 			productos.push(producto);
 		}

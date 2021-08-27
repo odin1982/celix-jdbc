@@ -1,9 +1,12 @@
 package org.celix.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class ProductoModel{
+public class ProductoModel implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String nombre;
 	private String descripcion;
@@ -23,6 +26,7 @@ public class ProductoModel{
 	private Long usuarioAgrego;
 	private LocalDateTime fechaModifico;
 	private Long usuarioModifico;
+	private Integer cantidad;
 	
 	public Long getId() {
 		return id;
@@ -174,6 +178,14 @@ public class ProductoModel{
 
 	public void setPrecioCompraConIVA(boolean precioCompraConIVA) {
 		this.precioCompraConIVA = precioCompraConIVA;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	@Override

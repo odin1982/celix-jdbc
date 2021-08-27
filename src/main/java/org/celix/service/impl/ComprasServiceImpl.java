@@ -12,7 +12,7 @@ public class ComprasServiceImpl implements ComprasService{
 
 	@Override
 	public void saveCompra(ComprasModel compra) {
-		
+		comprasRepository.saveCompra(compra);
 	}
 
 }

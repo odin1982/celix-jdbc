@@ -10,4 +10,5 @@ $(document).ready( function () {
     		        url: '../DataTables/es-mx.json'
     		    }
     });
+ 
 } );

@@ -10,6 +10,7 @@ import org.celix.model.ProductoModel;
 import org.celix.model.ProveedorModel;
 import org.celix.model.TipoDocumentoModel;
 import org.celix.service.AlmacenService;
+import org.celix.service.ComprasService;
 import org.celix.service.ProductoService;
 import org.celix.service.ProveedorService;
 import org.celix.service.TipoDocumentoService;
@@ -32,6 +33,7 @@ public class ComprasController {
 	@Autowired private TipoDocumentoService tipoDocumentoService;
 	@Autowired private AlmacenService almacenService;
 	@Autowired private ProductoService productoService;
+	@Autowired private ComprasService comprasService;
 	
 	@GetMapping("/index")
 	public String index(Model model) {
@@ -59,7 +61,8 @@ public class ComprasController {
 	
 	@PostMapping("save/compras")
 	public String saveCompras(@RequestBody ComprasModel compra) {
-		logger.info("productos: ",compra);
-		return "operacion/compras/index";
+		logger.info("compra: ",compra);
+		comprasService.saveCompra(compra);
+		return "redirect:operacion/compras/index";
 	}
 }

@@ -12,7 +12,7 @@
 		<div class="card">
 			<div class="card-header" th:text="#{'celix.title.form.marca'}"></div>
 			<div class="card-body">
-				<form th:action="@{/marca/save}" method="post" th:object="${marca}">
+				<form th:action="@{/marca/save}" method="post" th:object="${marca}" th:id="createMarca">
 					<input type="hidden" class="form-control" id="id" name="id" th:field="*{id}">
 					<div class="form-group row">
 						<label for="descripcion" class="col-sm-2 col-form-label" th:text="#{'celix.title.descripcion'}"></label>
@@ -32,7 +32,9 @@
 	</div>
 	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-	<script src="https://kit.fontawesome.com/33cdef5f0d.js"
-		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
+	<script th:src="@{/jquery-validation-1.19.3/lib/jquery-1.11.1.js}"></script>
+	<script th:src="@{/jquery-validation-1.19.3/dist/jquery.validate.js}"></script>
+	<script th:src="@{/js/marca/createMarca.js}"></script>
 </body>
 </html>

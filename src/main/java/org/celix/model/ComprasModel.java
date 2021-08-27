@@ -1,11 +1,14 @@
 package org.celix.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class ComprasModel {
+public class ComprasModel implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private Long idProveedor;
 	private String numeroDocumento;
 	private Long idTipoDocumento;
