@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var txtTelefonoFijo	= document.getElementById("telefonoFijo");
 	var txtTelefonoCelular	= document.getElementById("telefonoCelular");
+	var txtCorreoElectronico	= document.getElementById("correoElectronico");
 	
 	$("#createTienda").validate({
 		rules: {
@@ -15,11 +16,17 @@ $(document).ready(function() {
 				digits:{
 					depends: istelefonoCelularEmpty
 				}
+			},
+			correoElectronico:{
+				email:{
+					depends:isCorreoElectronicoEmpty
+				}
 			}
 		},
 		messages: {
 			nombre: "Campo obligatorio",
-			direccion: "Campo obligatorio"
+			direccion: "Campo obligatorio",
+			correoElectronico: "Porfavor ingresa un correo electrónico valido"
 		},
 		errorElement: "em",
 				errorPlacement: function ( error, element ) {
@@ -46,5 +53,8 @@ $(document).ready(function() {
 	
 	function istelefonoCelularEmpty() {
     	return txtTelefonoCelular.value.length > 0;
+	}
+	function isCorreoElectronicoEmpty() {
+    	return txtCorreoElectronico.value.length > 0;
 	}
 });

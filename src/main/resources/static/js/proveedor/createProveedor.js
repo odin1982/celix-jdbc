@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	var txtCorreoElectronico	= document.getElementById("correoElectronico");
+	
 	$("#createProveedor").validate({
 		rules: {
 			nombre: "required",
@@ -8,7 +10,12 @@ $(document).ready(function() {
       			digits: true
     		},
     		rfc: "required",
-			razonSocial: "required"
+			razonSocial: "required",
+			correoElectronico:{
+				email:{
+					depends:isCorreoElectronicoEmpty
+				}
+			}
 		},
 		messages: {
 			nombre: "Campo obligatorio",
@@ -18,7 +25,8 @@ $(document).ready(function() {
       			digits: "Solo se permiten números"
     		},
     		rfc: "Campo obligatorio",
-			razonSocial: "Campo obligatorio"
+			razonSocial: "Campo obligatorio",
+			correoElectronico: "Porfavor ingresa un correo electrónico valido"
 		},
 		errorElement: "em",
 				errorPlacement: function ( error, element ) {
@@ -38,4 +46,8 @@ $(document).ready(function() {
 					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
 				}
 	});
+	
+	function isCorreoElectronicoEmpty() {
+    	return txtCorreoElectronico.value.length > 0;
+	}
 });
