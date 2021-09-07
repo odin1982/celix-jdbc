@@ -12,7 +12,7 @@
 		<div class="card">
 			<div class="card-header" th:text="#{celix.title.form.producto}"></div>
 			<div class="card-body">
-				<form th:action="@{/producto/save}" method="post" th:object="${producto}">
+				<form th:action="@{/producto/save}" method="post" th:object="${producto}" th:id="createProducto" th:name="createProducto">
 					<input type="hidden" class="form-control" id="id" name="id" th:field="*{id}">
 					<div class="form-group row">
     					<label for="nombre" class="col-sm-3 col-form-label" th:text="#{celix.title.nombre}"></label>
@@ -27,11 +27,11 @@
     					</div>
   					</div>
   					<div class="form-group row">
-  						<label for="selectTipoProducto" class="col-sm-3 col-form-label" th:text="#{celix.title.tipo.producto}"></label>
+  						<label  class="col-sm-3 col-form-label" th:text="#{celix.title.tipo.producto}"></label>
 	  					<div class="col-sm-9">
-		  					<select id="selectTipoProducto" name="selectTipoProducto" th:field="*{idTipoProducto}" class="form-control">
+		  					<select id="selecttipoproducto" name="selecttipoproducto" th:field="*{idTipoProducto}" class="form-control">
 		        				<option th:value="0" selected th:text="#{celix.title.escoge.opcion}"></option>
-		        				<option th:each="tipoProducto :${ tiposProducto }" th:value="${tipoProducto.id}" th:text="${tipoProducto.descripcion}" th:selected="${idTipoProducto}"></option>
+		        				<option th:each="tipoProducto :${ tiposProducto }" th:value="${tipoProducto.id}" th:text="${tipoProducto.descripcion}"></option>
 		      				</select>
 	      				</div>
   					</div>
@@ -101,6 +101,9 @@
 	<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
-	<script th:src="@{/js/producto/create.js}"></script>
+	<script th:src="@{/js/producto/createProducto.js}"></script>
+	<script th:src="@{/jquery-validation-1.19.3/lib/jquery-1.11.1.js}"></script>
+	<script th:src="@{/jquery-validation-1.19.3/dist/jquery.validate.js}"></script>
+	<script th:src="@{/jquery-validation-1.19.3/dist/additional-methods.js}"></script>
 </body>
 </html>

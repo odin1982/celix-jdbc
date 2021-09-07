@@ -1510,3 +1510,9 @@ $.validator.addMethod( "ziprange", function( value, element ) {
 }, "Your ZIP-code must be in the range 902xx-xxxx to 905xx-xxxx" );
 return $;
 }));
+
+ $.validator.addMethod("selectcheck", function (value,element) {
+	console.log("value:" + value);
+	console.log("element:" + element);
+        return (value != '0');
+    }, "year required");

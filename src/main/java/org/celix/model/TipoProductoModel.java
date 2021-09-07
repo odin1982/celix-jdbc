@@ -2,14 +2,17 @@ package org.celix.model;
 
 public class TipoProductoModel {
 	private Long id;
+	private String strId;
 	private String descripcion;
 	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -19,7 +22,7 @@ public class TipoProductoModel {
 
 	@Override
 	public String toString() {
-		return "TipoProductoModel [id=" + id + ", descripcion=" + descripcion + "]";
+		return "TipoProductoModel [id=" + id + ", strId=" + strId + ", descripcion=" + descripcion + "]";
 	}
 	
 }
