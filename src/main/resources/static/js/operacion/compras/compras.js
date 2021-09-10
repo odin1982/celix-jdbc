@@ -17,7 +17,11 @@ $(document).ready(function() {
 	
 	var dateFechaCompra 	= document.getElementById("datepicker");
 	
-	var lblNombreProducto 	= document.getElementById("labelNombreProducto");
+	var nombreProducto 	= document.getElementById("nombreProducto");
+	
+	$("#divPrecioCompra").removeClass('d-none');
+ 	$("#divPrecioCompraIVA").addClass('d-none');
+	
 	
 	$.datepicker.regional['es'] = {
 			 closeText: 'Cerrar',
@@ -62,34 +66,121 @@ $(document).ready(function() {
         .remove()
         .draw();
     } );
+    
+    jQuery.validator.addMethod("validaPrecio", function(value, element,arg) {
+  return this.optional( element ) || /(^[0-9]{1,5}$|^[0-9]{1,2}\.[0-9]{1,2}$)/.test( value );
+}, 'Precio Inválido.');
+
+ jQuery.validator.addMethod("existeProducto", function(value, element,arg) {
+ return  nombreProducto.value != "No existe producto";
+}, 'No existe producto.');
+    
+    
+ 				$("#addProductoForm").validate({
+		rules: {
+			nombreProducto:{
+				required:function(element) {
+          			return nombreProducto.value == "";
+        		},
+        		existeProducto:true
+			} ,
+			precioCompra:{ 
+				required: function(element) {
+          			return !($("#precioCompraConIVA").is(":checked"));
+        		},
+				validaPrecio:true,
+			},
+			precioCompraIVA:{ 
+				required: function(element) {
+          			return ($("#precioCompraConIVA").is(":checked"));
+        		},
+				validaPrecio:true,
+			},
+			cantidad:{
+				required:true,
+				digits: true
+			}
+		},
+		messages: {
+			nombreProducto:{
+				required:"Busque un producto",
+				existeProducto:"No existe el producto"
+			},
+			precioCompra: {
+				required:"Campo obligatorio",
+				validaPrecio:"Precio Inválido"
+			},
+			precioCompraIVA: {
+				required:"Campo obligatorio",
+				validaPrecio:"Precio Inválido"
+			},
+			cantidad:{
+				required:"Campo obligatorio",
+				digits: "Ingrese una cantidad correcta"
+			}
+		},
+		errorElement: "em",
+				errorPlacement: function ( error, element ) {
+					// Add the `invalid-feedback` class to the error element
+					error.addClass( "invalid-feedback" );
+
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.next( "label" ) );
+					} else {
+						error.insertAfter( element );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					console.log("element: " + element);
+					console.log("errorClass: " + errorClass);
+					console.log("validClass: " + validClass);
+					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+				},
+				unhighlight: function (element, errorClass, validClass) {
+					console.log("element: " + element);
+					console.log("errorClass: " + errorClass);
+					console.log("validClass: " + validClass);
+					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+				}
+		});
+
+
+		
+		
+		
+    
 	
 	btnAgregarProducto.onclick = function agregarProducto(){
 		var datosTabla 		= tablaCompras.rows().data();
 		var existeProducto 	= false;
 		var rowExistente 	= null;
-		for(var numRow = 0; numRow<datosTabla.length;numRow++){
-			if(datosTabla[numRow][0] === txtIdProducto.value ){
-				console.log("Ya existe el producto");
-				existeProducto = true;
-				rowExistente = numRow;
+		
+		if($("#addProductoForm").valid()){
+			for(var numRow = 0; numRow<datosTabla.length;numRow++){
+				if(datosTabla[numRow][0] === txtIdProducto.value ){
+					console.log("Ya existe el producto");
+					existeProducto = true;
+					rowExistente = numRow;
+				}
+			}
+			
+			if(existeProducto){
+				var row = tablaCompras.row( rowExistente ).data() ;
+				row[6]	= parseInt(datosTabla[rowExistente][6]) + parseInt(txtCantidad.value);
+				tablaCompras.row(rowExistente).data(row).draw();
+			}else{
+				tablaCompras.row.add([
+					txtIdProducto.value,
+					txtCodigoProducto.value,
+					nombreProducto.value,
+					txtPrecioCompra.value,
+					txtPrecioCompraIVA.value,
+					txtPrecioVenta.value,
+					txtCantidad.value
+					]).draw( false );
 			}
 		}
-		
-		if(existeProducto){
-			var row = tablaCompras.row( rowExistente ).data() ;
-			row[6]	= parseInt(datosTabla[rowExistente][6]) + parseInt(txtCantidad.value);
-			tablaCompras.row(rowExistente).data(row).draw();
-		}else{
-			tablaCompras.row.add([
-				txtIdProducto.value,
-				txtCodigoProducto.value,
-				lblNombreProducto.textContent,
-				txtPrecioCompra.value,
-				txtPrecioCompraIVA.value,
-				txtPrecioVenta.value,
-				txtCantidad.value
-				]).draw( false );
-		}
+
 		
 	}
 	
@@ -103,12 +194,14 @@ $(document).ready(function() {
 	        success: function(producto) {
 	        	if(producto.id != null){
 	        		document.getElementById("idProducto").value = producto.id;
-	        		document.getElementById("labelNombreProducto").innerHTML = producto.nombre;
+	        		//document.getElementById("labelNombreProducto").innerHTML = producto.nombre;
+	        		document.getElementById("nombreProducto").value = producto.nombre;
 	        		document.getElementById("precioCompra").value = producto.precioCompra;
 	        		document.getElementById("precioCompraIVA").value = producto.precioCompraIVA;
 	        		document.getElementById("precioVenta").value = producto.precioVenta;
 	        	}else{
-	        		document.getElementById("labelNombreProducto").innerHTML = "No existe producto";
+	        		//document.getElementById("labelNombreProducto").innerHTML = "No existe producto";
+	        		document.getElementById("nombreProducto").value = "No existe producto";
 	        	}
 	        },
 	        error: function (jqXHR) {
@@ -156,6 +249,21 @@ $(document).ready(function() {
 	        }
 	    });
 	}
-	
-	
-})
+});
+
+function changeStatusPrecioCompraConIVA(){
+		 if (document.getElementById('precioCompraConIVA').checked) { 
+			 document.getElementById('precioCompra').disabled = true;
+			 document.getElementById('precioCompra').value = "";
+			 document.getElementById('precioCompraIVA').disabled = false;
+ 			 $("#divPrecioCompra").addClass('d-none');
+ 			 $("#divPrecioCompraIVA").removeClass('d-none');
+		 } 
+		 else {
+			 document.getElementById('precioCompra').disabled = false;
+			 document.getElementById('precioCompraIVA').disabled = true;
+			 document.getElementById('precioCompraIVA').value = "";
+ 			 $("#divPrecioCompra").removeClass('d-none');
+ 			  $("#divPrecioCompraIVA").addClass('d-none');
+		 }
+}

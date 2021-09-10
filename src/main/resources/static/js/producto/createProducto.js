@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$("#divPrecioCompra").removeClass('d-none');
- 	$("#precioCompraIVA").addClass('d-none');
+ 	$("#divPrecioCompraIVA").addClass('d-none');
 	document.getElementById('precioCompra').disabled = false;
 	document.getElementById('precioCompraIVA').disabled = true;
 //jquery validation toma el atributo name, con thymeleaf en los select se toma th:field	
@@ -9,10 +9,9 @@ $.validator.addMethod("validaSelect", function(value, element, arg){
  }, "Seleccione una opción");
  
 jQuery.validator.addMethod("validaPrecio", function(value, element,arg) {
-  // allow any non-whitespace characters as the host part
   console.log("regex:"+(/(^[0-9]{1,5}$|^[0-9]{1,2}\.[0-9]{1,2}$)/.test( value )));
   return this.optional( element ) || /(^[0-9]{1,5}$|^[0-9]{1,2}\.[0-9]{1,2}$)/.test( value );
-}, 'Please enter a valid email address.');
+}, 'Precio Inválido.');
 
 	$("#createProducto").validate({
 		rules: {
@@ -27,10 +26,14 @@ jQuery.validator.addMethod("validaPrecio", function(value, element,arg) {
         		},
 				validaPrecio:true,
 			},
-			precioCompraIVA:{
-				required:function(element) {
-          			return $("#precioCompraConIVA").is(":checked");
+			precioCompraIVA:{ 
+				required: function(element) {
+          			return ($("#precioCompraConIVA").is(":checked"));
         		},
+				validaPrecio:true,
+			},
+			precioVenta:{
+				required:true,
 				validaPrecio:true,
 			},
 		},
@@ -45,6 +48,10 @@ jQuery.validator.addMethod("validaPrecio", function(value, element,arg) {
 				validaPrecio:"Precio Inválido"
 			},
 			precioCompraIVA: {
+				required:"Campo obligatorio",
+				validaPrecio:"Precio Inválido"
+			},
+			precioVenta: {
 				required:"Campo obligatorio",
 				validaPrecio:"Precio Inválido"
 			},
@@ -89,18 +96,16 @@ jQuery.validator.addMethod("validaPrecio", function(value, element,arg) {
 function changeStatusPrecioCompraConIVA(){
 		 if (document.getElementById('precioCompraConIVA').checked) { 
 			 document.getElementById('precioCompra').disabled = true;
-//			 document.getElementById('precioCompra').style.display = 'none';
 			 document.getElementById('precioCompra').value = "";
 			 document.getElementById('precioCompraIVA').disabled = false;
  			 $("#divPrecioCompra").addClass('d-none');
- 			 $("#precioCompraIVA").removeClass('d-none');
+ 			 $("#divPrecioCompraIVA").removeClass('d-none');
 		 } 
 		 else {
 			 document.getElementById('precioCompra').disabled = false;
 			 document.getElementById('precioCompraIVA').disabled = true;
 			 document.getElementById('precioCompraIVA').value = "";
-//			 document.getElementById('precioCompra').style.display = 'block';
  			 $("#divPrecioCompra").removeClass('d-none');
- 			  $("#precioCompraIVA").addClass('d-none');
+ 			  $("#divPrecioCompraIVA").addClass('d-none');
 		 }
 }

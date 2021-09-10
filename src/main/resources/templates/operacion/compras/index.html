@@ -69,52 +69,57 @@
 				<div class="card">
 					<div class="card-header">Producto</div>
 					<div class="card-body">
-						<input type="hidden" class="form-control" id="idProducto" name="idProducto">
-						<input type="hidden" class="form-control" id="precioVenta" name="precioVenta">
-						<div class="form-group row">
-		    				<label for="codigoProducto" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.producto}"></label>
-		    				<div class="col-sm-8">
-		      					<input type="text" class="form-control" id="codigoProducto" name="codigoProducto"  th:attr="placeholder=#{celix.placeholder.codigo.producto}">
-		    				</div>
-		    				<div class="col-sm-1">
-		      					<button type="button" class="btn btn-light" id="buscarProducto"><i class="fa fa-search"></i></button>
-		    				</div>
-			      		</div>
-			      		<div class="form-group row">
-		    				<label class="col-sm-3 col-form-label" th:text="#{celix.title.form.producto}"></label>
-		    				<label class="col-sm-9 col-form-label" id="labelNombreProducto"></label>
-			      		</div>
-			      		<div class="form-group row">
-		    				<label for="precioCompraConIVA" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra.iva.pregunta}"></label>
-		    				<div class="col-sm-9" style="padding-left:37px;">
-		      					<input type="checkbox" class="form-check-input" id="precioCompraConIVA" name="precioCompraConIVA" onclick="changeStatusPrecioCompraConIVA();">
-		    				</div>
-		  				</div>
-	  					<div class="form-group row">
-	    					<label for="precioCompra" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra}"></label>
-	    					<div class="col-sm-9">
-	      						<input type="text" class="form-control" id="precioCompra" name="precioCompra" placeholder="Ingresa el precio de compra">
-	    					</div>
-	  					</div>
-	  					<div class="form-group row">
-	    					<label for="precioCompraIVA" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra.iva}"></label>
-	    					<div class="col-sm-9">
-	      						<input type="text" class="form-control" id="precioCompraIVA" name="precioCompraIVA" placeholder="Ingresa el precio de compra con IVA">
-	    					</div>
-	  					</div>
-	  					<div class="form-group row">
-	    					<label for="cantidad" class="col-sm-3 col-form-label" th:text="#{celix.title.cantidad}"></label>
-	    					<div class="col-sm-3" style="padding-right: 0px;">
-	      						<input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Ingresa la cantidad de producto">
-	    					</div>
-	    					<label for="fijarCantidad" class="col-sm-3 col-form-label" th:text="#{celix.title.fijar.cantidad}" style="padding-left: 59px;"></label>
-	    					<div class="col-sm-1" style="padding-top: 9px;">
-	      						<input type="checkbox" class="form-check-input" id="chkFijarCantidad" name="chkFijarCantidad" onclick="">
-	    					</div>
-	    					<div class="col-sm-2">
-	      						<button type="button" id="agregarProducto" class="btn btn-light float-right"><i class="fas fa-arrow-down"></i></button>
-	    					</div>
-	  					</div>
+						<form id="addProductoForm" >
+							<input type="hidden" class="form-control" id="idProducto" name="idProducto">
+							<input type="hidden" class="form-control" id="precioVenta" name="precioVenta">
+							<div class="form-group row">
+		    					<label for="codigoProducto" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.producto}"></label>
+		    					<div class="col-sm-8">
+		      						<input type="text" class="form-control" id="codigoProducto" name="codigoProducto"  th:attr="placeholder=#{celix.placeholder.codigo.producto}">
+		    					</div>
+		    					<div class="col-sm-1">
+		      						<button type="button" class="btn btn-light" id="buscarProducto"><i class="fa fa-search"></i></button>
+		    					</div>
+			      			</div>
+			      			<div class="form-group row">
+		    					<label class="col-sm-3 col-form-label" th:text="#{celix.title.form.producto}"></label>
+		    					<!--<label class="col-sm-9 col-form-label" id="labelNombreProducto" name="labelNombreProducto"></label>-->
+		    					<div class="col-sm-9">
+	      							<input type="text" class="form-control" id="nombreProducto" name="nombreProducto" placeholder="Busque un producto" readonly>
+	    						</div>
+			      			</div>
+			      			<div class="form-group row">
+		    					<label for="precioCompraConIVA" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra.iva.pregunta}"></label>
+		    					<div class="col-sm-9" style="padding-left:37px;">
+		      						<input type="checkbox" class="form-check-input" id="precioCompraConIVA" name="precioCompraConIVA" onclick="changeStatusPrecioCompraConIVA();">
+		    					</div>
+		  					</div>
+	  						<div class="form-group row" id="divPrecioCompra">
+	    						<label for="precioCompra" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra}"></label>
+	    						<div class="col-sm-9">
+	      							<input type="text" class="form-control" id="precioCompra" name="precioCompra" placeholder="Ingresa el precio de compra">
+	    						</div>
+	  						</div>
+	  						<div class="form-group row" id="divPrecioCompraIVA">
+	    						<label for="precioCompraIVA" class="col-sm-3 col-form-label" th:text="#{celix.title.precio.compra.iva}"></label>
+	    						<div class="col-sm-9">
+	      							<input type="text" class="form-control" id="precioCompraIVA" name="precioCompraIVA" placeholder="Ingresa el precio de compra con IVA">
+	    						</div>
+	  						</div>
+	  						<div class="form-group row">
+	    						<label for="cantidad" class="col-sm-3 col-form-label" th:text="#{celix.title.cantidad}"></label>
+	    						<div class="col-sm-3" style="padding-right: 0px;">
+	      							<input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Ingresa la cantidad de producto">
+	    						</div>
+	    						<label for="fijarCantidad" class="col-sm-3 col-form-label" th:text="#{celix.title.fijar.cantidad}" style="padding-left: 59px;"></label>
+	    						<div class="col-sm-1" style="padding-top: 9px;">
+	      							<input type="checkbox" class="form-check-input" id="chkFijarCantidad" name="chkFijarCantidad" onclick="">
+	    						</div>
+	    						<div class="col-sm-2">
+	      							<button type="button" id="agregarProducto" class="btn btn-light float-right"><i class="fas fa-arrow-down"></i></button>
+	    						</div>
+	  						</div>
+	  					</form>
 					</div>
 				</div>
 			</div>
@@ -168,6 +173,8 @@
 	<script src="https://kit.fontawesome.com/33cdef5f0d.js" crossorigin="anonymous"></script>
   	<script th:src="@{/jquery-ui-1.12.1-datepicker/jquery-ui.js}"></script><!-- datepicker -->
   	<script type="text/javascript" th:src="@{/DataTables/datatables.min.js}"></script><!-- datatable -->
+	<script th:src="@{/jquery-validation-1.19.3/dist/jquery.validate.js}"></script>
+	<script th:src="@{/jquery-validation-1.19.3/dist/additional-methods.js}"></script>
     <script th:src="@{/js/operacion/compras/compras.js}"></script>
 </body>
 </html>
