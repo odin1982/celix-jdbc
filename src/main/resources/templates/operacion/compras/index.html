@@ -69,9 +69,10 @@
 				<div class="card">
 					<div class="card-header">Producto</div>
 					<div class="card-body">
-						<form id="addProductoForm" >
+						<form id="addProductoForm" name="addProductoForm">
 							<input type="hidden" class="form-control" id="idProducto" name="idProducto">
 							<input type="hidden" class="form-control" id="precioVenta" name="precioVenta">
+							<input type="hidden" class="form-control" id="hiddenTxtPreCantidad" name="hiddenTxtPreCantidad">
 							<div class="form-group row">
 		    					<label for="codigoProducto" class="col-sm-3 col-form-label" th:text="#{celix.title.codigo.producto}"></label>
 		    					<div class="col-sm-8">
