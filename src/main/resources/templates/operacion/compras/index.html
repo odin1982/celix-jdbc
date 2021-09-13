@@ -11,13 +11,13 @@
 <body>
 	<header th:insert="fragments/menu :: menu-principal"></header>
 	<br>
+		<form th:action="@{/compras/save}" method="post" th:object="${compras}" id="formInventario" name="formInventario">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-6">
 				<div class="card">
 					<div class="card-header" th:text="#{celix.title.form.compras}"></div>
 					<div class="card-body">
-						<form th:action="@{/compras/save}" method="post" th:object="${compras}">
 							<div class="form-group row">
   								<label for="selectProveedor" class="col-sm-3 col-form-label" th:text="#{celix.title.proveedor}"></label>
 	  							<div class="col-sm-9">
@@ -48,23 +48,28 @@
 		        			<div class="form-group row">
 		            			<label for="fechaCompra" class="col-sm-3 col-form-label" th:text="#{celix.title.fecha.compra}"></label>
 		        				<div class="col-sm-9">
-		        					<input type="text" class="form-control" id="datepicker" th:attr="placeholder=#{celix.placeholder.fecha}">
+		        					<input type="text" class="form-control" id="datepicker" name="datepicker" th:attr="placeholder=#{celix.placeholder.fecha}" readonly>
 		        				</div>
 		        			</div>
         			
 		        			<div class="form-group row">
 		    					<label for="selectAlmacen" class="col-sm-3 col-form-label" th:text="#{celix.title.enviar.almacen}"></label>
 			  					<div class="col-sm-9">
-				  					<select id="selectAlmacen" name="selectAlmacen" th:field="*{idTipoDocumento}" class="form-control">
+				  					<select id="selectAlmacen" name="selectAlmacen" th:field="*{idAlmacen}" class="form-control">
 				        				<option th:value="0" th:text="#{celix.title.escoge.opcion}" selected></option>
 				        				<option th:each="almacen :${ almacenes }" th:value="${almacen.id}" th:text="${almacen.descripcion}"></option>
 				      				</select>
 			      				</div>
 			      			</div>
-	      				</form>
+			      			<div class="form-group row">
+			  					<div class="col-sm-12">
+									<input type="hidden" name="table_required">
+				  				</div>
+			      			</div>
 					</div>
 				</div>
 			</div>
+		</form>
 			<div class="col-sm-6">
 				<div class="card">
 					<div class="card-header">Producto</div>
@@ -131,7 +136,7 @@
 				<div class="card">
 			<div class="card-header" th:text="${@environment.getProperty('celix.title.form.agregar.inventario')}"></div>
 			<div class="card-body">
-				<table id="table_compras" class="table">
+				<table id="table_compras" name="table_compras" class="table">
     				<thead class="thead-dark">
 					    <tr>
 					      <th scope="col"  th:text="#{'celix.title.id'}"></th>

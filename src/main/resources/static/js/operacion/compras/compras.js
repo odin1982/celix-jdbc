@@ -81,6 +81,14 @@ $(document).ready(function() {
  	jQuery.validator.addMethod("existeProducto", function(value, element,arg) {
  		return  nombreProducto.value != "No existe producto";
 	}, 'No existe producto.');
+	
+	jQuery.validator.addMethod("validaSelect", function(value, element, arg){
+  		return arg != value;
+ 	}, "Seleccione una opción");
+ 	
+ 	jQuery.validator.addMethod("validaFecha", function(value, element,arg) {
+  		return this.optional( element ) || /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-.\/])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/.test( value );
+	}, 'Fecha Inválida.');
     
     
  	$("#addProductoForm").validate({
@@ -125,6 +133,54 @@ $(document).ready(function() {
 				required:"Campo obligatorio",
 				digits: "Ingrese una cantidad correcta"
 			}
+		},
+		errorElement: "em",
+				errorPlacement: function ( error, element ) {
+					// Add the `invalid-feedback` class to the error element
+					error.addClass( "invalid-feedback" );
+
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.next( "label" ) );
+					} else {
+						error.insertAfter( element );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+				},
+				unhighlight: function (element, errorClass, validClass) {
+					$( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+				}
+		});
+		
+		$("#formInventario").validate({
+			  ignore: "",
+		rules: {
+			idProveedor:		{ validaSelect:"0" },
+			numeroDocumento:	{ required:true },
+			idTipoDocumento:	{ validaSelect:"0" },
+			datepicker:			{ 
+									required:true,
+									validaFecha:true 
+								},
+			idAlmacen:			{ validaSelect:"0" },
+			table_required:		{
+									required: function(element) {
+										console.log("any"+(!$('#table_compras').DataTable().data().any()));
+          								 return (!$('#table_compras').DataTable().data().any());
+          							}
+          						} 
+		},
+		messages: {
+			idProveedor:		"Escoge una opción",
+			numeroDocumento: 	"Campo obligatorio",
+			idTipoDocumento:	"Escoge una opción",
+			datepicker:			{
+									required: "Campo obligatorio",
+									validaFecha: "Fecha Invalida"
+								},
+			idProveedor:		"Escoge una opción",
+			table_required:		"Debes agregar un producto a tu nota o factura"
 		},
 		errorElement: "em",
 				errorPlacement: function ( error, element ) {
@@ -226,41 +282,48 @@ $(document).ready(function() {
 	btnSaveInventario.onclick = function saveInventario(){
 		var productos = new Array();
 		var data = tablaCompras.rows().data();
+
+		console.log("formInventario valid: "+$("#formInventario").valid()); 
+		if($("#formInventario").valid()){
+			for (let i = 0; i < data.length; i++) {
+	  			var producto = {
+					"id": 					data[i][0],
+					"codigoBarrasTienda": 	data[i][1],
+					"descripcion": 			data[i][2],
+					"precioCompra": 		data[i][3],
+					"precioCompraIVA": 		data[i][4],
+					"precioVenta": 			data[i][5],
+					"cantidad": 			data[i][6]
+				};
+				productos.push(producto);
+			}
+			
+			var compra = {
+				"idProveedor": 		selProveedor.value,
+				"numeroDocumento": 	txtNumeroDocumento.value,
+				"idTipoDocumento":	selTipoDocumento.value,
+				"fechaCompra":		dateFechaCompra.value,
+				"idAlmacen":		selAlmacen.value,
+				"productos": 		productos,
+			}
+			
+			$.ajax({
+				type: 'POST',
+				url: 'save/compras',
+		        data: JSON.stringify(compra),
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        success: function(producto) {
+		        },
+		        error: function (jqXHR) {
+		        	$(document.body).text('Error: ' + jqXHR.status);
+		        }
+		    });
 		
-		for (let i = 0; i < data.length; i++) {
-  			var producto = {
-				"id": 					data[i][0],
-				"codigoBarrasTienda": 	data[i][1],
-				"descripcion": 			data[i][2],
-				"precioCompra": 		data[i][3],
-				"precioCompraIVA": 		data[i][4],
-				"precioVenta": 			data[i][5],
-				"cantidad": 			data[i][6]
-			};
-			productos.push(producto);
+		}else{
+			
 		}
 		
-		var compra = {
-			"idProveedor": 		selProveedor.value,
-			"numeroDocumento": 	txtNumeroDocumento.value,
-			"idTipoDocumento":	selTipoDocumento.value,
-			"fechaCompra":		dateFechaCompra.value,
-			"idAlmacen":		selAlmacen.value,
-			"productos": 		productos,
-		}
-		
-		$.ajax({
-			type: 'POST',
-			url: 'save/compras',
-	        data: JSON.stringify(compra),
-	        dataType: 'json',
-	        contentType: 'application/json',
-	        success: function(producto) {
-	        },
-	        error: function (jqXHR) {
-	        	$(document.body).text('Error: ' + jqXHR.status);
-	        }
-	    });
 	}
 	
 	txtPrecioCompra.onchange = function changePrecioCompraIVA(){
