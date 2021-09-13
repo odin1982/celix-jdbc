@@ -281,6 +281,28 @@ $(document).ready(function() {
 			hiddenTxtPreCantidad.value = 0;
 		}
 	}
+	
+	chkPrecioCompraConIVA.onchange = function(){
+		if(document.getElementById("precioCompra").value == undefined || document.getElementById("precioCompra").value.trim() == "" || document.getElementById("precioCompra").value == null  ){
+			document.getElementById("precioCompra").value = (document.getElementById("precioCompraIVA").value / 1.16).toFixed(2);
+		}
+		
+		if(document.getElementById("precioCompraIVA").value == undefined || document.getElementById("precioCompraIVA").value.trim() == "" || document.getElementById("precioCompraIVA").value == null  ){
+			document.getElementById("precioCompraIVA").value = (document.getElementById("precioCompra").value * 1.16).toFixed(2);
+		}
+	
+		if (document.getElementById('precioCompraConIVA').checked) { 
+			document.getElementById('precioCompra').disabled = true;
+			document.getElementById('precioCompraIVA').disabled = false;
+ 			$("#divPrecioCompra").addClass('d-none');
+ 			$("#divPrecioCompraIVA").removeClass('d-none');
+		}else{
+			document.getElementById('precioCompra').disabled = false;
+			document.getElementById('precioCompraIVA').disabled = true;
+ 			$("#divPrecioCompra").removeClass('d-none');
+ 			$("#divPrecioCompraIVA").addClass('d-none');
+		 }
+	}
 
 function resetAddProductoForm(){
 	txtCodigoProducto.value = "";
@@ -297,31 +319,29 @@ function resetAddProductoForm(){
 
 });
 
-function changeStatusPrecioCompraConIVA(){
-	if(document.getElementById("precioCompra").value == undefined || document.getElementById("precioCompra").value.trim() == "" || document.getElementById("precioCompra").value == null  ){
-		document.getElementById("precioCompra").value = (document.getElementById("precioCompraIVA").value / 1.16).toFixed(2);
-	}
-		
-	if(document.getElementById("precioCompraIVA").value == undefined || document.getElementById("precioCompraIVA").value.trim() == "" || document.getElementById("precioCompraIVA").value == null  ){
-		document.getElementById("precioCompraIVA").value = (document.getElementById("precioCompra").value * 1.16).toFixed(2);
-	}
-	
-	
-		 if (document.getElementById('precioCompraConIVA').checked) { 
-			 document.getElementById('precioCompra').disabled = true;
-//			 document.getElementById('precioCompra').value = "";
-			 document.getElementById('precioCompraIVA').disabled = false;
- 			 $("#divPrecioCompra").addClass('d-none');
- 			 $("#divPrecioCompraIVA").removeClass('d-none');
-		 } 
-		 else {
-			 document.getElementById('precioCompra').disabled = false;
-			 document.getElementById('precioCompraIVA').disabled = true;
-//			 document.getElementById('precioCompraIVA').value = "";
- 			 $("#divPrecioCompra").removeClass('d-none');
- 			  $("#divPrecioCompraIVA").addClass('d-none');
-		 }
-}
+//function changeStatusPrecioCompraConIVA(){
+//	if(document.getElementById("precioCompra").value == undefined || document.getElementById("precioCompra").value.trim() == "" || document.getElementById("precioCompra").value == null  ){
+//		document.getElementById("precioCompra").value = (document.getElementById("precioCompraIVA").value / 1.16).toFixed(2);
+//	}
+//		
+//	if(document.getElementById("precioCompraIVA").value == undefined || document.getElementById("precioCompraIVA").value.trim() == "" || document.getElementById("precioCompraIVA").value == null  ){
+//		document.getElementById("precioCompraIVA").value = (document.getElementById("precioCompra").value * 1.16).toFixed(2);
+//	}
+//	
+//	
+//		 if (document.getElementById('precioCompraConIVA').checked) { 
+//			 document.getElementById('precioCompra').disabled = true;
+//			 document.getElementById('precioCompraIVA').disabled = false;
+// 			 $("#divPrecioCompra").addClass('d-none');
+// 			 $("#divPrecioCompraIVA").removeClass('d-none');
+//		 } 
+//		 else {
+//			 document.getElementById('precioCompra').disabled = false;
+//			 document.getElementById('precioCompraIVA').disabled = true;
+// 			 $("#divPrecioCompra").removeClass('d-none');
+// 			  $("#divPrecioCompraIVA").addClass('d-none');
+//		 }
+//}
 
 //TODO - Cambiar este metodo por unchange
 //TODO - Validar campos obligatorios al momento de guardar  inventario
