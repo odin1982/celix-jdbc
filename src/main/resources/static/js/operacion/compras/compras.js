@@ -45,7 +45,8 @@ $(document).ready(function() {
 			 firstDay: 			1,
 			 isRTL: 			false,
 			 showMonthAfterYear: false,
-			 yearSuffix: 		''
+			 yearSuffix: 		'',
+			 maxDate:			"+0m +0w"
 			 };
 			 $.datepicker.setDefaults($.datepicker.regional['es']);
 	 
@@ -89,6 +90,10 @@ $(document).ready(function() {
  	jQuery.validator.addMethod("validaFecha", function(value, element,arg) {
   		return this.optional( element ) || /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-.\/])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/.test( value );
 	}, 'Fecha Inválida.');
+	
+	 jQuery.validator.addMethod("mayorCeroDecimales", function(value, element,arg) {
+  		return value >0;
+	}, 'Precio Inválido.');
     
     
  	$("#addProductoForm").validate({
@@ -104,16 +109,19 @@ $(document).ready(function() {
           			return !($("#precioCompraConIVA").is(":checked"));
         		},
 				validaPrecio:true,
+        		mayorCeroDecimales:true,
 			},
 			precioCompraIVA:{ 
 				required: function(element) {
           			return ($("#precioCompraConIVA").is(":checked"));
         		},
 				validaPrecio:true,
+				mayorCeroDecimales:true,
 			},
 			cantidad:{
 				required:true,
-				digits: true
+				digits: true,
+				min:1
 			}
 		},
 		messages: {
@@ -123,15 +131,18 @@ $(document).ready(function() {
 			},
 			precioCompra: {
 				required:"Campo obligatorio",
-				validaPrecio:"Precio Inválido"
+				validaPrecio:"Precio Inválido",
+				mayorCeroDecimales:"El precio debe ser mayor a cero"
 			},
 			precioCompraIVA: {
 				required:"Campo obligatorio",
-				validaPrecio:"Precio Inválido"
+				validaPrecio:"Precio Inválido",
+				mayorCeroDecimales:"El precio debe ser mayor a cero"
 			},
 			cantidad:{
 				required:"Campo obligatorio",
-				digits: "Ingrese una cantidad correcta"
+				digits:  "Ingrese una cantidad correcta",
+				min:	 "La cantidad debe ser mayor a cero"	
 			}
 		},
 		errorElement: "em",
@@ -252,12 +263,13 @@ $(document).ready(function() {
 		
 	}
 	
-	btnBuscarProducto.onclick = function buscarProducto(){
-		$.ajax({
+	txtCodigoProducto.onkeyup = function buscarProducto(event){
+		if (event.keyCode === 13) {
+					$.ajax({
 			type: 'GET',
 			url: 'buscar/producto',
 	        data: {
-	        	codigoProducto: document.getElementById('codigoProducto').value
+	        	codigoProducto: document.getElementById('codigoProducto').value.trim()
 	        },
 	        success: function(producto) {
 	        	if(producto.id != null){
@@ -267,6 +279,11 @@ $(document).ready(function() {
 	        		document.getElementById("precioCompra").value = producto.precioCompra;
 	        		document.getElementById("precioCompraIVA").value = producto.precioCompraIVA;
 	        		document.getElementById("precioVenta").value = producto.precioVenta;
+	        		if(chkFijarCantidad.checked && (txtCantidad.value.trim() != "")){
+						btnAgregarProducto.focus();
+					}else{
+						txtCantidad.focus();
+					}
 	        	}else{
 	        		//document.getElementById("labelNombreProducto").innerHTML = "No existe producto";
 	        		document.getElementById("nombreProducto").value = "No existe producto";
@@ -275,8 +292,10 @@ $(document).ready(function() {
 	        error: function (jqXHR) {
 	        	$(document.body).text('Error: ' + jqXHR.status);
 	        }
-	    });
-	};
+	    });			
+		}
+
+	}; 
 	
 	//guarda productos de la nota
 	btnSaveInventario.onclick = function saveInventario(){
@@ -327,11 +346,38 @@ $(document).ready(function() {
 	}
 	
 	txtPrecioCompra.onchange = function changePrecioCompraIVA(){
-		txtPrecioCompraIVA.value = (txtPrecioCompra.value * 1.16).toFixed(2);
+		console.log("txtPrecioCompra: " + txtPrecioCompra.value);
+		txtPrecioCompraIVA.value = (txtPrecioCompra.value * 1.16).toFixed(2) > 0 ? (txtPrecioCompra.value * 1.16).toFixed(2) : "";
 	}
 	
 	txtPrecioCompraIVA.onchange = function changePrecioCompra(){
-		txtPrecioCompra.value = (txtPrecioCompraIVA.value / 1.16).toFixed(2);
+		console.log("txtPrecioCompra: " + txtPrecioCompraIVA.value);
+		txtPrecioCompra.value = (txtPrecioCompraIVA.value / 1.16).toFixed(2) > 0 ? (txtPrecioCompraIVA.value / 1.16).toFixed(2) : "";
+	}
+	
+	txtCantidad.onchange = function(){
+		var validator = $( "#addProductoForm" ).validate();
+		if(validator.element( "#cantidad" )){//valida si el elemento cantidad es valido
+			if($("#chkFijarCantidad").is(':checked')){
+				hiddenTxtPreCantidad.value = txtCantidad.value;
+			}
+		}else{
+			hiddenTxtPreCantidad.value = 0;
+		}
+	}
+	
+	txtCantidad.onkeyup = function(event){
+		if (event.keyCode === 13) {
+		var validator = $( "#addProductoForm" ).validate();
+		if(validator.element( "#cantidad" )){//valida si el elemento cantidad es valido
+			if($("#chkFijarCantidad").is(':checked')){
+				hiddenTxtPreCantidad.value = txtCantidad.value;
+			}
+			btnAgregarProducto.focus();
+		}else{
+			hiddenTxtPreCantidad.value = 0;
+		}
+		}
 	}
 	
 	chkFijarCantidad.onchange = function changePreFijarCantidad(){
@@ -347,11 +393,15 @@ $(document).ready(function() {
 	
 	chkPrecioCompraConIVA.onchange = function(){
 		if(document.getElementById("precioCompra").value == undefined || document.getElementById("precioCompra").value.trim() == "" || document.getElementById("precioCompra").value == null  ){
-			document.getElementById("precioCompra").value = (document.getElementById("precioCompraIVA").value / 1.16).toFixed(2);
+			document.getElementById("precioCompra").value = "";
+		}else{
+			document.getElementById("precioCompra").value = (document.getElementById("precioCompraIVA").value / 1.16).toFixed(2) > 0 ? (document.getElementById("precioCompraIVA").value / 1.16).toFixed(2) : "";
 		}
 		
 		if(document.getElementById("precioCompraIVA").value == undefined || document.getElementById("precioCompraIVA").value.trim() == "" || document.getElementById("precioCompraIVA").value == null  ){
-			document.getElementById("precioCompraIVA").value = (document.getElementById("precioCompra").value * 1.16).toFixed(2);
+			document.getElementById("precioCompraIVA").value = "";
+		}else{
+			document.getElementById("precioCompraIVA").value = (document.getElementById("precioCompra").value * 1.16).toFixed(2) > 0 ? (document.getElementById("precioCompra").value * 1.16).toFixed(2) : "";
 		}
 	
 		if (document.getElementById('precioCompraConIVA').checked) { 
@@ -381,30 +431,3 @@ function resetAddProductoForm(){
 }
 
 });
-
-//function changeStatusPrecioCompraConIVA(){
-//	if(document.getElementById("precioCompra").value == undefined || document.getElementById("precioCompra").value.trim() == "" || document.getElementById("precioCompra").value == null  ){
-//		document.getElementById("precioCompra").value = (document.getElementById("precioCompraIVA").value / 1.16).toFixed(2);
-//	}
-//		
-//	if(document.getElementById("precioCompraIVA").value == undefined || document.getElementById("precioCompraIVA").value.trim() == "" || document.getElementById("precioCompraIVA").value == null  ){
-//		document.getElementById("precioCompraIVA").value = (document.getElementById("precioCompra").value * 1.16).toFixed(2);
-//	}
-//	
-//	
-//		 if (document.getElementById('precioCompraConIVA').checked) { 
-//			 document.getElementById('precioCompra').disabled = true;
-//			 document.getElementById('precioCompraIVA').disabled = false;
-// 			 $("#divPrecioCompra").addClass('d-none');
-// 			 $("#divPrecioCompraIVA").removeClass('d-none');
-//		 } 
-//		 else {
-//			 document.getElementById('precioCompra').disabled = false;
-//			 document.getElementById('precioCompraIVA').disabled = true;
-// 			 $("#divPrecioCompra").removeClass('d-none');
-// 			  $("#divPrecioCompraIVA").addClass('d-none');
-//		 }
-//}
-
-//TODO - Cambiar este metodo por unchange
-//TODO - Validar campos obligatorios al momento de guardar  inventario
